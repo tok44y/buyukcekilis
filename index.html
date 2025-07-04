@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>20 KİŞİYE 1K ROBUX ÇEKİLİŞİ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 0;
+      background: none; /* Background GIF artık ::before'da */
+    }
+
+    /* GIF arka plan */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI0cHR5YnV5d25sdGRoMTZiN3lpZDFnNXAwOGlucTA5bW8zZWl3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif') no-repeat center center/cover;
+      z-index: -2;
+      filter: brightness(1) saturate(1.2);
+      will-change: transform;
+      animation: subtleMove 30s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    /* Yarı saydam koyu katman - kontrast için */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 15, 15, 0.55);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes subtleMove {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.03) translate(10px, 10px); }
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 3rem;
+      color: #f0f0f0;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      user-select: none;
+      text-align: center;
+      text-shadow:
+        0 0 7px #000000cc,
+        0 0 10px #000000cc,
+        0 0 15px #000000cc;
+    }
+    p.lead {
+      max-width: 480px;
+      text-align: center;
+      color: #ddd;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      user-select: none;
+      text-shadow:
+        0 0 4px #000000aa;
+    }
+
+    .container {
+      background: #1f1f1fdd;
+      padding: 35px 40px;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow:
+        0 0 30px #000000dd,
+        inset 0 0 10px #444444bb;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: saturate(180%) blur(8px);
+      border: 1px solid #333;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #eee;
+      user-select: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 17px;
+      border-radius: 14px;
+      border: 2px solid #555;
+      background: #2e2e2ecc;
+      color: #eee;
+      outline: none !important;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: inset 0 0 6px #111;
+      backdrop-filter: blur(4px);
+    }
+    input[type="text"]:focus {
+      border-color: #bbb;
+      box-shadow: 0 0 12px #aaa;
+      background: #3a3a3acc;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px 0;
+      margin-top: 28px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #121212;
+      background: linear-gradient(90deg, #bbb, #eee);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow:
+        0 0 20px #ffffffcc,
+        inset 0 0 6px #999;
+      user-select: none;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    button:hover:enabled {
+      background: linear-gradient(90deg, #ddd, #fff);
+      box-shadow: 0 0 30px #ffffffee;
+    }
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      box-shadow: none;
+      color: #bbb;
+    }
+
+    .error {
+      color: #ff4d4d;
+      margin-top: 18px;
+      font-weight: 700;
+      user-select: none;
+      text-shadow: 0 0 3px #550000aa;
+    }
+    .info {
+      margin-top: 22px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #4CAF50;
+      user-select: none;
+      text-shadow:
+        0 0 8px #4CAF50cc,
+        0 0 20px #4CAF50aa;
+      animation: floatUp 2.5s ease forwards;
+      pointer-events: none;
+      min-height: 26px;
+      display: inline-block;
+    }
+
+    .terms {
+      margin-top: 36px;
+      background: #292929cc;
+      border-radius: 16px;
+      padding: 22px 25px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #ddd;
+      user-select: none;
+      box-shadow: 0 0 12px #222222cc;
+      backdrop-filter: blur(5px);
+      border: 1px solid #444;
+    }
+
+    .terms ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .terms li {
+      margin-bottom: 12px;
+    }
+
+    .term-link {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 6px 12px;
+      background: #444;
+      color: #eee;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 4px #000a;
+    }
+
+    .term-link:hover {
+      background: #555;
+      color: #fff;
+    }
+
+    .participants {
+      margin-top: 50px;
+      max-height: 280px;
+      overflow-y: auto;
+      background: #121212cc;
+      border-radius: 16px;
+      padding: 18px 22px;
+      font-size: 14px;
+      box-shadow:
+        0 0 25px #000000bb,
+        inset 0 0 12px #222222aa;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: saturate(150%) blur(6px);
+      border: 1px solid #333;
+    }
+
+    .participants h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-weight: 700;
+      color: #eee;
+      text-shadow: 0 0 4px #000000cc;
+    }
+
+    .participant {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid #222;
+    }
+
+    .participant:last-child {
+      border-bottom: none;
+    }
+
+    .avatar-initial {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #3a3a3a;
+      color: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      margin-right: 16px;
+      border: 1.5px solid #555;
+      text-transform: uppercase;
+      box-shadow: 0 0 4px #000000cc inset;
+    }
+
+    .participants::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .participants::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+
+    .participants::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>20 KİŞİYE 1K ROBUX</h1>
+<p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
+
+<div class="container">
+  <form id="raffleForm" autocomplete="off">
+    <label for="username">Roblox Kullanıcı Adınız:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="Örnek: MarksBlade"
+      required
+      minlength="3"
+      maxlength="20"
+      pattern="^[a-zA-Z0-9_]+$"
+    />
+
+    <div class="terms">
+      <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
+      <ul>
+        <li>✔️ Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></li>
+        <li>✔️ Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></li>
+        <li>✔️ Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></li>
+        <li>⚠️ Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
+        <li>🎉 Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
+      </ul>
+    </div>
+
+    <button type="submit" id="submitBtn">Çekilişe Katıl</button>
+    <div class="error" id="errorMsg" style="display:none;"></div>
+    <div class="info" id="infoMsg"></div>
+  </form>
+
+  <div class="participants" id="participants">
+    <h2>Katılanlar</h2>
+    <div id="participantList">Yükleniyor...</div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCaPAQ8sHlRdE3cuJSYokb9b-rWi_F0Ei8",
+    authDomain: "marksbladebuyukcekilis.firebaseapp.com",
+    databaseURL: "https://marksbladebuyukcekilis-default-rtdb.firebaseio.com",
+    projectId: "marksbladebuyukcekilis",
+    storageBucket: "marksbladebuyukcekilis.firebasestorage.app",
+    messagingSenderId: "403809139259",
+    appId: "1:403809139259:web:03b758ff825039e662ba1e",
+    measurementId: "G-XNSYXYSEEW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  const raffleForm = document.getElementById('raffleForm');
+  const usernameInput = document.getElementById('username');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const infoMsg = document.getElementById('infoMsg');
+  const participantList = document.getElementById('participantList');
+
+  async function getUserIP() {
+    try {
+      const res = await fetch('https://api.ipify.org?format=json');
+      const data = await res.json();
+      return data.ip;
+    } catch {
+      return null;
+    }
+  }
+
+  function listenParticipants() {
+    const participantsRef = ref(database, 'participants');
+    onValue(participantsRef, (snapshot) => {
+      const data = snapshot.val();
+      participantList.innerHTML = '';
+      if (!data) {
+        participantList.innerHTML = '<p>Henüz katılım yok.</p>';
+        return;
+      }
+      const entries = Object.values(data);
+      entries.forEach(({ username }) => {
+        const div = document.createElement('div');
+        div.classList.add('participant');
+
+        const initial = document.createElement('div');
+        initial.classList.add('avatar-initial');
+        initial.textContent = username.charAt(0).toUpperCase();
+
+        const name = document.createElement('span');
+        name.textContent = username;
+
+        div.appendChild(initial);
+        div.appendChild(name);
+        participantList.appendChild(div);
+      });
+    });
+  }
+
+  async function checkIPExists(ip) {
+    const ipKey = ip.replace(/\./g, '-');
+    const ipRef = ref(database, 'ips/' + ipKey);
+    const snapshot = await get(ipRef);
+    return snapshot.exists();
+  }
+
+  async function saveIP(ip) {
+    const ipKey = ip.replace(/\./g, '-');
+    const ipRef = ref(database, 'ips/' + ipKey);
+    await set(ipRef, true);
+  }
+
+  async function saveParticipant(username, ip) {
+    const participantsRef = ref(database, 'participants');
+    const newParticipantRef = push(participantsRef);
+    await set(newParticipantRef, { username, ip });
+  }
+
+  raffleForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+    infoMsg.textContent = '';
+    infoMsg.style.animation = 'none'; // animasyon reset
+
+    const username = usernameInput.value.trim();
+
+    if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
+      errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Kontrol ediliyor...';
+
+    const ip = await getUserIP();
+    if (!ip) {
+      errorMsg.textContent = 'IP adresiniz alınamadı.';
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Çekilişe Katıl';
+      return;
+    }
+
+    const ipExists = await checkIPExists(ip);
+    if (ipExists) {
+      errorMsg.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Çekilişe Katıl';
+      return;
+    }
+
+    try {
+      await saveParticipant(username, ip);
+      await saveIP(ip);
+
+      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
+      infoMsg.style.animation = 'none';
+      void infoMsg.offsetWidth; // animasyon reset için trigger
+      infoMsg.style.animation = 'floatUp 2.5s ease forwards';
+
+      raffleForm.reset();
+    } catch {
+      errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
+      errorMsg.style.display = 'block';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Çekilişe Katıl';
+  });
+
+  listenParticipants();
+</script>
+
+</body>
+</html>
+
