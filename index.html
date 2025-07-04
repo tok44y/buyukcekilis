@@ -7,24 +7,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Senin verdiğin tüm CSS'i buraya aynen yapıştırıyorum, düzenlenmedi */
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       font-family: 'Montserrat', sans-serif;
       color: #e0e0e0;
       min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 50px 20px;
       overflow-x: hidden;
       position: relative;
       z-index: 0;
-      background: none;
+      background: none; /* Background GIF artık ::before'da */
     }
+
+    /* GIF arka plan */
     body::before {
       content: "";
-      position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI0cHR5YnV5d25sdGRoMTZiN3lpZDFnNXAwOGlucTA5bW8zZWl3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif') no-repeat center center/cover;
       z-index: -2;
       filter: brightness(1) saturate(1.2);
@@ -32,23 +40,39 @@
       animation: subtleMove 30s ease-in-out infinite alternate;
       pointer-events: none;
     }
+
+    /* Yarı saydam koyu katman - kontrast için */
     body::after {
       content: "";
-      position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       background: rgba(15, 15, 15, 0.55);
       z-index: -1;
       pointer-events: none;
     }
+
     @keyframes subtleMove {
       0% { transform: scale(1) translate(0, 0); }
       100% { transform: scale(1.03) translate(10px, 10px); }
     }
+
     @keyframes floatUp {
-      0% { opacity: 0; transform: translateY(15px); }
-      50% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-20px); }
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
     }
+
     h1 {
       font-weight: 900;
       font-size: 3rem;
@@ -71,8 +95,10 @@
       font-size: 1.2rem;
       margin-bottom: 40px;
       user-select: none;
-      text-shadow: 0 0 4px #000000aa;
+      text-shadow:
+        0 0 4px #000000aa;
     }
+
     .container {
       background: #1f1f1fdd;
       padding: 35px 40px;
@@ -87,6 +113,7 @@
       backdrop-filter: saturate(180%) blur(8px);
       border: 1px solid #333;
     }
+
     label {
       display: block;
       font-weight: 700;
@@ -94,6 +121,7 @@
       color: #eee;
       user-select: none;
     }
+
     input[type="text"] {
       width: 100%;
       padding: 16px 20px;
@@ -112,6 +140,7 @@
       box-shadow: 0 0 12px #aaa;
       background: #3a3a3acc;
     }
+
     button {
       width: 100%;
       padding: 18px 0;
@@ -139,6 +168,7 @@
       box-shadow: none;
       color: #bbb;
     }
+
     .error {
       color: #ff4d4d;
       margin-top: 18px;
@@ -160,6 +190,7 @@
       min-height: 26px;
       display: inline-block;
     }
+
     .terms {
       margin-top: 36px;
       background: #292929cc;
@@ -173,13 +204,16 @@
       backdrop-filter: blur(5px);
       border: 1px solid #444;
     }
+
     .terms ul {
       list-style: none;
       padding-left: 0;
     }
+
     .terms li {
       margin-bottom: 12px;
     }
+
     .term-link {
       display: inline-block;
       margin-top: 4px;
@@ -191,10 +225,12 @@
       transition: background 0.3s ease, color 0.3s ease;
       box-shadow: 0 0 4px #000a;
     }
+
     .term-link:hover {
       background: #555;
       color: #fff;
     }
+
     .participants {
       margin-top: 50px;
       max-height: 280px;
@@ -212,6 +248,7 @@
       backdrop-filter: saturate(150%) blur(6px);
       border: 1px solid #333;
     }
+
     .participants h2 {
       margin-top: 0;
       margin-bottom: 18px;
@@ -219,15 +256,18 @@
       color: #eee;
       text-shadow: 0 0 4px #000000cc;
     }
+
     .participant {
       display: flex;
       align-items: center;
       padding: 10px 14px;
       border-bottom: 1px solid #222;
     }
+
     .participant:last-child {
       border-bottom: none;
     }
+
     .avatar-initial {
       width: 32px;
       height: 32px;
@@ -244,13 +284,16 @@
       text-transform: uppercase;
       box-shadow: 0 0 4px #000000cc inset;
     }
+
     .participants::-webkit-scrollbar {
       width: 7px;
     }
+
     .participants::-webkit-scrollbar-track {
       background: #1a1a1a;
       border-radius: 8px;
     }
+
     .participants::-webkit-scrollbar-thumb {
       background: #555;
       border-radius: 8px;
@@ -263,7 +306,7 @@
 <p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
 
 <div class="container">
-  <form id="raffleForm" autocomplete="off" novalidate>
+  <form id="raffleForm" autocomplete="off">
     <label for="username">Roblox Kullanıcı Adınız:</label>
     <input
       type="text"
@@ -279,9 +322,9 @@
     <div class="terms">
       <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
       <ul>
-        <li>✔️ Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank" rel="noopener noreferrer">Roblox Profilim</a></li>
-        <li>✔️ Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" rel="noopener noreferrer">Marks Blade Grubu</a></li>
-        <li>✔️ Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" rel="noopener noreferrer">Roblox Oyunu</a></li>
+        <li>✔️ Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></li>
+        <li>✔️ Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></li>
+        <li>✔️ Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></li>
         <li>⚠️ Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
         <li>🎉 Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
       </ul>
@@ -302,7 +345,6 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
   import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-  // Firebase yapılandırman
   const firebaseConfig = {
     apiKey: "AIzaSyCaPAQ8sHlRdE3cuJSYokb9b-rWi_F0Ei8",
     authDomain: "marksbladebuyukcekilis.firebaseapp.com",
@@ -324,11 +366,9 @@
   const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
 
-  // Kullanıcının IP'sini alıyoruz
   async function getUserIP() {
     try {
       const res = await fetch('https://api.ipify.org?format=json');
-      if (!res.ok) throw new Error('IP alınamadı');
       const data = await res.json();
       return data.ip;
     } catch {
@@ -336,7 +376,6 @@
     }
   }
 
-  // Katılımcıları dinle ve listele
   function listenParticipants() {
     const participantsRef = ref(database, 'participants');
     onValue(participantsRef, (snapshot) => {
@@ -365,7 +404,6 @@
     });
   }
 
-  // IP zaten var mı kontrol et
   async function checkIPExists(ip) {
     const ipKey = ip.replace(/\./g, '-');
     const ipRef = ref(database, 'ips/' + ipKey);
@@ -373,14 +411,12 @@
     return snapshot.exists();
   }
 
-  // IP kaydet
   async function saveIP(ip) {
     const ipKey = ip.replace(/\./g, '-');
     const ipRef = ref(database, 'ips/' + ipKey);
     await set(ipRef, true);
   }
 
-  // Katılımcıyı kaydet
   async function saveParticipant(username, ip) {
     const participantsRef = ref(database, 'participants');
     const newParticipantRef = push(participantsRef);
@@ -389,14 +425,12 @@
 
   raffleForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     errorMsg.style.display = 'none';
     infoMsg.textContent = '';
-    infoMsg.style.animation = 'none';
+    infoMsg.style.animation = 'none'; // animasyon reset
 
     const username = usernameInput.value.trim();
 
-    // Basit input doğrulama
     if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
       errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
       errorMsg.style.display = 'block';
@@ -406,17 +440,15 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Kontrol ediliyor...';
 
-    // IP al
     const ip = await getUserIP();
     if (!ip) {
-      errorMsg.textContent = 'IP adresiniz alınamadı. Lütfen internet bağlantınızı kontrol edin.';
+      errorMsg.textContent = 'IP adresiniz alınamadı.';
       errorMsg.style.display = 'block';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
 
-    // IP kontrol
     const ipExists = await checkIPExists(ip);
     if (ipExists) {
       errorMsg.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
@@ -426,25 +458,28 @@
       return;
     }
 
-    // Katılımcı kaydet
     try {
       await saveParticipant(username, ip);
       await saveIP(ip);
 
       infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
       infoMsg.style.animation = 'none';
-      void infoMsg.offsetWidth; // animasyon reset
+      void infoMsg.offsetWidth; // animasyon reset için trigger
       infoMsg.style.animation = 'floatUp 2.5s ease forwards';
 
       raffleForm.reset();
-    } catch (err) {
-      errorMsg.textContent = 'Kayıt sırasında bir hata oluştu. Lütfen tekrar deneyin.';
+    } catch {
+      errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
       errorMsg.style.display = 'block';
-      console.error('Kayıt hatası:', err);
     }
 
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
 
-  // Sayfa y
+  listenParticipants();
+</script>
+
+</body>
+</html>
+
