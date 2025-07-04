@@ -10,23 +10,30 @@
     * {
       box-sizing: border-box;
     }
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
+      background: none;
       color: #e0e0e0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 50px 20px;
-      overflow-x: hidden;
-      position: relative;
-      z-index: 0;
-      background: none; /* Background GIF artık ::before'da */
     }
 
-    /* GIF arka plan */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      z-index: 0;
+      background: none;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    /* Background GIF */
     body::before {
       content: "";
       position: fixed;
@@ -41,7 +48,7 @@
       pointer-events: none;
     }
 
-    /* Yarı saydam koyu katman - kontrast için */
+    /* Overlay */
     body::after {
       content: "";
       position: fixed;
@@ -77,26 +84,24 @@
       font-weight: 900;
       font-size: 3rem;
       color: #f0f0f0;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 3px;
       user-select: none;
-      text-align: center;
       text-shadow:
         0 0 7px #000000cc,
         0 0 10px #000000cc,
         0 0 15px #000000cc;
     }
+
     p.lead {
       max-width: 480px;
-      text-align: center;
+      margin: 0 auto 40px;
       color: #ddd;
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 40px;
+      font-weight: 700;
+      font-size: 1.3rem;
       user-select: none;
-      text-shadow:
-        0 0 4px #000000aa;
+      text-shadow: 0 0 4px #000000aa;
     }
 
     .container {
@@ -112,6 +117,8 @@
       z-index: 1;
       backdrop-filter: saturate(180%) blur(8px);
       border: 1px solid #333;
+      margin: 0 auto;
+      text-align: left;
     }
 
     label {
@@ -197,7 +204,7 @@
       border-radius: 16px;
       padding: 22px 25px;
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
       color: #ddd;
       user-select: none;
       box-shadow: 0 0 12px #222222cc;
@@ -211,7 +218,21 @@
     }
 
     .terms li {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      padding-left: 0;
+      color: #ccc;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .terms li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
     }
 
     .term-link {
@@ -247,6 +268,10 @@
       z-index: 1;
       backdrop-filter: saturate(150%) blur(6px);
       border: 1px solid #333;
+      text-align: left;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .participants h2 {
@@ -255,6 +280,7 @@
       font-weight: 700;
       color: #eee;
       text-shadow: 0 0 4px #000000cc;
+      text-align: center;
     }
 
     .participant {
@@ -303,7 +329,7 @@
 <body>
 
 <h1>20 KİŞİYE 1K ROBUX</h1>
-<p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
+<p class="lead">Toplam 20 katılımcı arasında 1000 Robux dağıtılacaktır. Hemen katılınız.</p>
 
 <div class="container">
   <form id="raffleForm" autocomplete="off">
@@ -320,13 +346,13 @@
     />
 
     <div class="terms">
-      <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
+      <p><strong>Çekilişe katılım için aşağıdaki şartlar gereklidir:</strong></p>
       <ul>
-        <li>✔️ Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></li>
-        <li>✔️ Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></li>
-        <li>✔️ Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></li>
-        <li>⚠️ Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
-        <li>🎉 Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
+        <li>Beni takip etmek → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank" rel="noopener noreferrer">Roblox Profilim</a></li>
+        <li>Gruba katılmak → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" rel="noopener noreferrer">Marks Blade Grubu</a></li>
+        <li>Oyunu beğenmek ve favorilere eklemek → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" rel="noopener noreferrer">Roblox Oyunu</a></li>
+        <li>Her IP adresinden yalnızca bir katılım yapılabilir.</li>
+        <li>Toplamda 20 kişi rastgele seçilecektir.</li>
       </ul>
     </div>
 
@@ -334,11 +360,11 @@
     <div class="error" id="errorMsg" style="display:none;"></div>
     <div class="info" id="infoMsg"></div>
   </form>
+</div>
 
-  <div class="participants" id="participants">
-    <h2>Katılanlar</h2>
-    <div id="participantList">Yükleniyor...</div>
-  </div>
+<div class="participants" id="participants">
+  <h2>Katılanlar</h2>
+  <div id="participantList">Yükleniyor...</div>
 </div>
 
 <script type="module">
@@ -432,7 +458,7 @@
     const username = usernameInput.value.trim();
 
     if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
-      errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
+      errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı giriniz.';
       errorMsg.style.display = 'block';
       return;
     }
@@ -451,7 +477,7 @@
 
     const ipExists = await checkIPExists(ip);
     if (ipExists) {
-      errorMsg.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
+      errorMsg.textContent = 'Bu IP adresiyle daha önce katılım yapılmıştır.';
       errorMsg.style.display = 'block';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
@@ -462,7 +488,7 @@
       await saveParticipant(username, ip);
       await saveIP(ip);
 
-      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
+      infoMsg.textContent = 'Başarıyla katıldınız. Başarılar dileriz.';
       infoMsg.style.animation = 'none';
       void infoMsg.offsetWidth; // animasyon reset için trigger
       infoMsg.style.animation = 'floatUp 2.5s ease forwards';
@@ -482,4 +508,3 @@
 
 </body>
 </html>
-
