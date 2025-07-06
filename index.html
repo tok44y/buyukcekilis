@@ -394,7 +394,7 @@
 <h1>20 KİŞİYE 1K ROBUX</h1>
 <p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
 
-<div class="container">
+<div class="container" id="mainContainer">
   <form id="raffleForm" autocomplete="off">
     <div id="step1" class="step active">
       <label for="username"><strong>Roblox Kullanıcı Adınız:</strong></label>
@@ -465,6 +465,18 @@
   </div>
 </div>
 
+<div id="alreadyJoined" style="display:none; text-align:center; padding:40px 20px;">
+  <h2 style="color:#4CAF50;">Zaten katıldınız!</h2>
+  <div style="margin:18px 0 28px 0; font-size:1.2em; color:#fff;">
+    <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
+  </div>
+  <div style="margin-bottom:18px; color:#bbb;">Katılımcılar arasında adınızı görebilirsiniz.</div>
+  <div class="participants" id="participants">
+    <h2>Katılanlar</h2>
+    <div id="participantList">Yükleniyor...</div>
+  </div>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
   import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
@@ -505,6 +517,9 @@
   const likeCountdown = document.getElementById('likeCountdown');
   const followWrap = document.getElementById('followWrap');
   const likeWrap = document.getElementById('likeWrap');
+  const mainContainer = document.getElementById('mainContainer');
+  const alreadyJoined = document.getElementById('alreadyJoined');
+  const joinedUsername = document.getElementById('joinedUsername');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -518,7 +533,7 @@
     }
   }
 
-  function listenParticipants() {
+  function listenParticipants(myUsername) {
     const participantsRef = ref(database, 'participants');
     onValue(participantsRef, (snapshot) => {
       const data = snapshot.val();
@@ -531,14 +546,16 @@
       entries.forEach(({ username }) => {
         const div = document.createElement('div');
         div.classList.add('participant');
-
+        if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
+          div.style.background = '#222a';
+          div.style.color = '#ffd700';
+          div.style.fontWeight = 'bold';
+        }
         const initial = document.createElement('div');
         initial.classList.add('avatar-initial');
         initial.textContent = username.charAt(0).toUpperCase();
-
         const name = document.createElement('span');
         name.textContent = username;
-
         div.appendChild(initial);
         div.appendChild(name);
         participantList.appendChild(div);
@@ -645,6 +662,8 @@
         step2Success.textContent = '';
         submitBtn.disabled = true;
         submitBtn.textContent = 'Çekilişe Katıl';
+        // Katılım sonrası sayfayı yenile, kullanıcıya alreadyJoined ekranı gelsin
+        window.location.reload();
       }, 2500);
     } catch {
       step2Error.textContent = 'Kayıt sırasında hata oluştu.';
@@ -681,13 +700,7 @@
     if (stepNum === 2) onStep2Open();
   }
 
-  // Tikler ilgili linke tıklamadan aktif olmasın, her biri bağımsız ve 15 saniye beklemeli
-  chkFollow.disabled = true;
-  chkLike.disabled = true;
-  let followTimer = null;
-  let likeTimer = null;
-  let followCount = 0;
-  let likeCount = 0;
+  // Tikler ilgili linke tıklamadan aktif olmasın, her biri bağımsız ve kendi süresiyle
   function startCountdown(type) {
     let seconds = type === 'follow' ? 7 : 25;
     const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
@@ -700,10 +713,9 @@
     }
     chk.disabled = true;
     wrap.style.opacity = 0.6;
-    countdownSpan.textContent = seconds + ' sn';
+    countdownSpan.textContent = 'Yükleniyor...';
     let timer = setInterval(() => {
       seconds--;
-      countdownSpan.textContent = seconds > 0 ? (seconds + ' sn') : '';
       if (seconds <= 0) {
         clearInterval(timer);
         chk.disabled = false;
@@ -724,7 +736,33 @@
   followWrap.style.opacity = 0.6;
   likeWrap.style.opacity = 0.6;
 
-  listenParticipants();
+  // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
+  window.addEventListener('DOMContentLoaded', async () => {
+    const ip = await getUserIP();
+    if (!ip) return;
+    const ipKey = ip.replace(/\./g, '-');
+    const ipRef = ref(database, 'ips/' + ipKey);
+    const snapshot = await get(ipRef);
+    if (snapshot.exists()) {
+      // Katılmış, kullanıcı adını bul
+      const participantsRef = ref(database, 'participants');
+      const snap = await get(participantsRef);
+      let myUsername = '';
+      if (snap.exists()) {
+        const entries = Object.values(snap.val());
+        const found = entries.find(e => e.ip === ip);
+        if (found) myUsername = found.username;
+      }
+      mainContainer.style.display = 'none';
+      alreadyJoined.style.display = 'block';
+      joinedUsername.textContent = myUsername;
+      listenParticipants(myUsername);
+    } else {
+      mainContainer.style.display = 'block';
+      alreadyJoined.style.display = 'none';
+      listenParticipants();
+    }
+  });
 </script>
 
 </body>
