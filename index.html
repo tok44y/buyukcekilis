@@ -325,6 +325,64 @@
       z-index: -1;
       box-shadow: none;
     }
+
+    .step {
+      display: none;
+      transition: opacity 0.5s cubic-bezier(.4,1.4,.6,1);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .step.active {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInStep 0.6s cubic-bezier(.4,1.4,.6,1);
+    }
+    @keyframes fadeInStep {
+      0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .step-btn {
+      width: 100%;
+      padding: 16px 0;
+      margin-top: 28px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #121212;
+      background: linear-gradient(90deg, #bbb, #eee);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ffffffcc, inset 0 0 6px #999;
+      user-select: none;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .step-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+      box-shadow: none;
+      color: #bbb;
+    }
+    .step-error {
+      color: #ff4d4d;
+      margin-top: 18px;
+      font-weight: 700;
+      user-select: none;
+      text-shadow: 0 0 3px #550000aa;
+      min-height: 24px;
+      text-align: center;
+    }
+    .step-success {
+      color: #4CAF50;
+      margin-top: 18px;
+      font-weight: 700;
+      user-select: none;
+      text-shadow: 0 0 8px #4CAF50cc, 0 0 20px #4CAF50aa;
+      min-height: 24px;
+      text-align: center;
+      font-size: 1.2em;
+      animation: floatUp 2.5s ease forwards;
+    }
   </style>
 </head>
 <body>
@@ -338,51 +396,49 @@
 
 <div class="container">
   <form id="raffleForm" autocomplete="off">
-    <label for="username">Roblox Kullanıcı Adınız:</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      placeholder="Örnek: MarksBlade"
-      required
-      minlength="3"
-      maxlength="20"
-      pattern="^[a-zA-Z0-9_]+$"
-    />
-
-    <div class="terms">
-      <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
-      <ul style="padding-left:0; list-style:none;">
-        <li>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <input type="checkbox" id="chkFollow" style="accent-color:#4CAF50; width:18px; height:18px;" />
-            <span><strong>Beni takip et</strong> <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></span>
-          </label>
-        </li>
-        <li>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <input type="checkbox" id="chkGroup" style="accent-color:#4CAF50; width:18px; height:18px;" />
-            <span><strong>Gruba katıl</strong> <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></span>
-          </label>
-        </li>
-        <li>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <input type="checkbox" id="chkLike" style="accent-color:#4CAF50; width:18px; height:18px;" />
-            <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></span>
-          </label>
-        </li>
-        <li style="margin-top:10px;">
-          <span>Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</span>
-        </li>
-        <li>
-          <span>Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</span>
-        </li>
-      </ul>
+    <div id="step1" class="step active">
+      <label for="username"><strong>Roblox Kullanıcı Adınız:</strong></label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Örnek: MarksBlade"
+        required
+        minlength="3"
+        maxlength="20"
+        pattern="^[a-zA-Z0-9_]+$"
+      />
+      <button type="button" id="nextBtn" class="step-btn">Devam Et</button>
+      <div class="step-error" id="step1Error"></div>
     </div>
-
-    <button type="submit" id="submitBtn" disabled>Çekilişe Katıl</button>
-    <div class="error" id="errorMsg" style="display:none;"></div>
-    <div class="info" id="infoMsg"></div>
+    <div id="step2" class="step">
+      <div class="terms">
+        <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
+        <ul style="padding-left:0; list-style:none;">
+          <li>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="chkFollow" style="accent-color:#4CAF50; width:18px; height:18px;" />
+              <span><strong>Beni takip et</strong> <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></span>
+            </label>
+          </li>
+          <li>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="chkLike" style="accent-color:#4CAF50; width:18px; height:18px;" />
+              <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></span>
+            </label>
+          </li>
+          <li style="margin-top:10px;">
+            <span>Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</span>
+          </li>
+          <li>
+            <span>Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</span>
+          </li>
+        </ul>
+      </div>
+      <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
+      <div class="step-error" id="step2Error"></div>
+      <div class="step-success" id="step2Success"></div>
+    </div>
   </form>
 
   <div class="participants" id="participants">
@@ -416,8 +472,14 @@
   const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
   const chkFollow = document.getElementById('chkFollow');
-  const chkGroup = document.getElementById('chkGroup');
   const chkLike = document.getElementById('chkLike');
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const nextBtn = document.getElementById('nextBtn');
+  const step1Error = document.getElementById('step1Error');
+  const step2Error = document.getElementById('step2Error');
+  const step2Success = document.getElementById('step2Success');
+  let currentUsername = '';
 
   async function getUserIP() {
     try {
@@ -476,74 +538,114 @@
     await set(newParticipantRef, { username, ip });
   }
 
-  function checkAllTerms() {
-    return chkFollow.checked && chkGroup.checked && chkLike.checked;
+  function showStep(stepNum) {
+    step1.classList.remove('active');
+    step2.classList.remove('active');
+    if (stepNum === 1) step1.classList.add('active');
+    if (stepNum === 2) step2.classList.add('active');
   }
 
+  function checkAllTerms() {
+    return chkFollow.checked && chkLike.checked;
+  }
   function updateSubmitBtn() {
     submitBtn.disabled = !checkAllTerms();
   }
-
   chkFollow.addEventListener('change', updateSubmitBtn);
-  chkGroup.addEventListener('change', updateSubmitBtn);
   chkLike.addEventListener('change', updateSubmitBtn);
+
+  nextBtn.addEventListener('click', async () => {
+    step1Error.textContent = '';
+    const username = usernameInput.value.trim();
+    if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
+      step1Error.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
+      return;
+    }
+    nextBtn.disabled = true;
+    nextBtn.textContent = 'Kontrol ediliyor...';
+    // Kullanıcı adından userId çek
+    let userId = null;
+    try {
+      const res = await fetch(`https://api.roblox.com/users/get-by-username?username=${encodeURIComponent(username)}`);
+      const data = await res.json();
+      if (data && data.Id) {
+        userId = data.Id;
+      } else {
+        step1Error.textContent = 'Kullanıcı bulunamadı.';
+        nextBtn.disabled = false;
+        nextBtn.textContent = 'Devam Et';
+        return;
+      }
+    } catch {
+      step1Error.textContent = 'Kullanıcı kontrolü sırasında hata oluştu.';
+      nextBtn.disabled = false;
+      nextBtn.textContent = 'Devam Et';
+      return;
+    }
+    // Grup üyeliği kontrolü
+    const groupId = 35669821;
+    try {
+      const groupRes = await fetch(`https://groups.roblox.com/v1/groups/${groupId}/users/${userId}`);
+      if (groupRes.status === 200) {
+        const groupData = await groupRes.json();
+        if (groupData && groupData.errors && groupData.errors.length > 0) {
+          step1Error.textContent = 'Gruba katıldığınızdan emin olun!';
+          nextBtn.disabled = false;
+          nextBtn.textContent = 'Devam Et';
+          return;
+        }
+        // Başarılı
+        currentUsername = username;
+        showStep(2);
+      } else {
+        step1Error.textContent = 'Grup üyeliği kontrolü başarısız.';
+      }
+    } catch {
+      step1Error.textContent = 'Grup üyeliği kontrolü sırasında hata oluştu.';
+    }
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Devam Et';
+  });
 
   raffleForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    errorMsg.style.display = 'none';
-    infoMsg.textContent = '';
-    infoMsg.style.animation = 'none'; // animasyon reset
-
+    step2Error.textContent = '';
+    step2Success.textContent = '';
     if (!checkAllTerms()) {
-      errorMsg.textContent = 'Lütfen tüm şartları yerine getirdiğinizi onaylayın!';
-      errorMsg.style.display = 'block';
+      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizi onaylayın!';
       return;
     }
-
-    const username = usernameInput.value.trim();
-
-    if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
-      errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
-      errorMsg.style.display = 'block';
-      return;
-    }
-
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Kontrol ediliyor...';
-
+    submitBtn.textContent = 'Katılım Kaydediliyor...';
+    // IP kontrolü ve katılım kaydı
     const ip = await getUserIP();
     if (!ip) {
-      errorMsg.textContent = 'IP adresiniz alınamadı.';
-      errorMsg.style.display = 'block';
+      step2Error.textContent = 'IP adresiniz alınamadı.';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
-
     const ipExists = await checkIPExists(ip);
     if (ipExists) {
-      errorMsg.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
-      errorMsg.style.display = 'block';
+      step2Error.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
-
     try {
-      await saveParticipant(username, ip);
+      await saveParticipant(currentUsername, ip);
       await saveIP(ip);
-
-      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
-      infoMsg.style.animation = 'none';
-      void infoMsg.offsetWidth; // animasyon reset için trigger
-      infoMsg.style.animation = 'floatUp 2.5s ease forwards';
-
+      step2Success.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
       raffleForm.reset();
+      setTimeout(() => {
+        showStep(1);
+        step2Success.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Çekilişe Katıl';
+      }, 2500);
     } catch {
-      errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
-      errorMsg.style.display = 'block';
+      step2Error.textContent = 'Kayıt sırasında hata oluştu.';
     }
-
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
