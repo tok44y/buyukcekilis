@@ -564,6 +564,15 @@
 </head>
 <body>
 
+<!-- ANA BAŞLIK PANELİ (YENİ) -->
+<div id="mainHeaderPanel" style="width:100vw; max-width:100%; background:rgba(34,36,38,0.93); border-radius:0 0 28px 28px; box-shadow:0 6px 32px #0007, 0 2px 8px #0002; border-bottom:2.5px solid #444; padding:38px 0 32px 0; margin:0 0 38px 0; display:flex; flex-direction:column; align-items:center; gap:18px;">
+  <div style="font-size:2.5rem; font-weight:900; color:#fff; letter-spacing:2px; text-shadow:0 0 12px #000a;">20 KİŞİYE 1K ROBUX ÇEKİLİŞİ</div>
+  <div style="font-size:1.18em; color:#e0e0e0; font-weight:700; margin-bottom:2px;">Katılımcılar ekleniyor</div>
+  <div id="countdownBox" style="background:rgba(60,60,65,0.85); color:#fff; border-radius:12px; padding:10px 22px; font-size:1.08em; font-weight:700; box-shadow:0 0 10px #0003; border:1.5px solid #444; margin-top:6px;">
+    Açıklanacak: <span id="countdownTimer" style="color:#ffd700; font-weight:900;">Yükleniyor...</span>
+  </div>
+</div>
+
 <!-- DUYURU KUTUSU EN ÜSTE -->
 <div class="raffle-announcement" style="width:100vw; max-width:100%; border-radius:0 0 28px 28px; box-shadow:0 6px 32px #0007, 0 2px 8px #0002; background:rgba(34,34,38,0.92); color:#f5f5f5; font-size:1.18em; font-weight:800; text-align:center; padding:32px 0 28px 0; margin:0 0 38px 0; border-bottom:2.5px solid #43e97b; letter-spacing:0.5px;">
   <strong>Çekiliş 30 Haziran 2024 saat 23:59'da sona erecek! Kazananlar bu sayfada açıklanacaktır.</strong>
@@ -942,8 +951,8 @@
   chkFollow.disabled = true;
   chkLike.disabled = true;
 
-  // Geri sayım fonksiyonu (örnek: 30 Haziran 2024 23:59)
-  function startCountdownTimer() {
+  // Geri sayım fonksiyonu (üst panel için)
+  function startMainCountdown() {
     const target = new Date('2024-06-30T23:59:00+03:00');
     function update() {
       const now = new Date();
@@ -955,11 +964,14 @@
       const mins = Math.floor(diff / (1000 * 60));
       diff -= mins * (1000 * 60);
       const secs = Math.floor(diff / 1000);
-      countdownTimer.textContent = `${days}g ${hours}s ${mins}dk ${secs}sn`;
+      document.getElementById('countdownTimer').textContent = `${days}g ${hours}s ${mins}dk ${secs}sn`;
     }
     update();
     setInterval(update, 1000);
   }
+  window.addEventListener('DOMContentLoaded', () => {
+    startMainCountdown();
+  });
 
   // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
   window.addEventListener('DOMContentLoaded', async () => {
