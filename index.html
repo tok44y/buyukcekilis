@@ -564,14 +564,16 @@
 </head>
 <body>
 
-<!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ) -->
+<!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ, MODERN) -->
 <div id="joinedSuccess" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:480px; margin:60px auto 0 auto;">
-  <div style="background:#43e97b; color:#23232b; font-size:1.18em; font-weight:900; border-radius:14px; box-shadow:0 0 18px #000a,0 2px 8px #0002; padding:22px 0 18px 0; width:100%; text-align:center; margin-bottom:22px; letter-spacing:1px; animation:joinedFadeIn 0.8s cubic-bezier(.4,1.4,.6,1);">
-    <span style="display:block; font-size:1.05em; margin-bottom:6px; color:#23232b; font-weight:800;">Başarıyla katıldınız!</span>
-    <span style="font-size:0.98em; color:#23232b; font-weight:700;">Kullanıcı adınız: <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span></span>
+  <div style="margin-bottom:32px;">
+    <div style="font-size:2.1rem; font-weight:900; color:#f5f5f5; text-align:center; letter-spacing:1.2px; text-shadow:0 0 7px #0008; margin-bottom:18px;">Katılanlar</div>
+    <div id="successSoftBox" style="background:rgba(67,233,123,0.18); color:#23232b; border-radius:18px; box-shadow:0 4px 24px #0004,0 1.5px 8px #43e97b33; padding:28px 0 18px 0; width:100%; text-align:center; margin-bottom:18px; border:1.5px solid #43e97b55;">
+      <span style="display:block; font-size:1.18em; margin-bottom:7px; color:#43e97b; font-weight:900; letter-spacing:0.5px;">Başarıyla katıldınız!</span>
+      <span style="font-size:1.05em; color:#fff; font-weight:700;">Kullanıcı adınız: <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span></span>
+    </div>
   </div>
   <div class="participants" id="participants" style="margin-top:0;">
-    <h2>Katılanlar</h2>
     <div id="participantList">Yükleniyor...</div>
   </div>
 </div>
@@ -719,12 +721,42 @@
         participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
         return;
       }
+      let meEntry = null;
+      let others = [];
       entries.forEach(({ username }) => {
+        if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
+          meEntry = username;
+        } else {
+          others.push(username);
+        }
+      });
+      // Önce kendi adını, sonra diğerlerini sırala
+      if (meEntry) {
+        const div = document.createElement('div');
+        div.classList.add('participant', 'me');
+        div.style.background = 'linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)';
+        div.style.color = '#23232b';
+        div.style.fontWeight = '900';
+        div.style.fontSize = '1.13em';
+        div.style.marginBottom = '8px';
+        div.style.boxShadow = '0 0 12px #43e97b55, 0 2px 8px #0002';
+        div.style.borderRadius = '10px';
+        const initial = document.createElement('div');
+        initial.classList.add('avatar-initial');
+        initial.textContent = meEntry.charAt(0).toUpperCase();
+        initial.style.background = '#fff';
+        initial.style.color = '#43e97b';
+        initial.style.border = '2px solid #43e97b';
+        initial.style.boxShadow = '0 0 8px #43e97b55 inset';
+        const name = document.createElement('span');
+        name.textContent = meEntry;
+        div.appendChild(initial);
+        div.appendChild(name);
+        participantList.appendChild(div);
+      }
+      others.forEach(username => {
         const div = document.createElement('div');
         div.classList.add('participant');
-        if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
-          div.classList.add('me');
-        }
         const initial = document.createElement('div');
         initial.classList.add('avatar-initial');
         initial.textContent = username.charAt(0).toUpperCase();
@@ -734,7 +766,6 @@
         div.appendChild(name);
         participantList.appendChild(div);
       });
-      // alreadyJoined ekranında kendi nickini küçük göster
       if (myUsername && document.getElementById('joinedUsername')) {
         document.getElementById('joinedUsername').textContent = myUsername;
       }
