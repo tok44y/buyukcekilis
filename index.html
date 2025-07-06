@@ -233,7 +233,7 @@
     }
 
     .participants {
-      margin-top: 50px;
+      margin-top: 22px;
       max-height: 280px;
       overflow-y: auto;
       background: #121212cc;
@@ -263,6 +263,24 @@
       align-items: center;
       padding: 10px 14px;
       border-bottom: 1px solid #222;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: participantFadeIn 0.7s cubic-bezier(.4,1.4,.6,1) forwards;
+    }
+
+    @keyframes participantFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .participant:last-child {
@@ -325,6 +343,39 @@
       z-index: -1;
       box-shadow: none;
     }
+
+    .toast-success {
+      position: fixed;
+      top: 38px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+      color: #222;
+      font-weight: 800;
+      font-size: 1.18rem;
+      padding: 18px 38px 18px 24px;
+      border-radius: 16px;
+      box-shadow: 0 6px 32px #1bffb7a0, 0 1.5px 8px #0002;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      animation: toastFadeIn 0.7s cubic-bezier(.4,1.4,.6,1) forwards;
+    }
+    .toast-success.hide {
+      animation: toastFadeOut 0.6s cubic-bezier(.4,1.4,.6,1) forwards;
+    }
+    @keyframes toastFadeIn {
+      0% { opacity: 0; transform: translate(-50%, -30px) scale(0.95); }
+      80% { opacity: 1; transform: translate(-50%, 6px) scale(1.03); }
+      100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+    @keyframes toastFadeOut {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -30px) scale(0.95); }
+    }
   </style>
 </head>
 <body>
@@ -373,6 +424,12 @@
   </div>
 </div>
 
+<!-- Toast Success Kutusu -->
+<div id="toastSuccess" class="toast-success" style="display:none;">
+  <span style="font-size:1.5em;">🎉</span>
+  <span id="toastSuccessMsg">Başarıyla katıldınız! Bol şans!</span>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
   import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
@@ -397,6 +454,8 @@
   const errorMsg = document.getElementById('errorMsg');
   const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
+  const toastSuccess = document.getElementById('toastSuccess');
+  const toastSuccessMsg = document.getElementById('toastSuccessMsg');
 
   async function getUserIP() {
     try {
@@ -418,9 +477,10 @@
         return;
       }
       const entries = Object.values(data);
-      entries.forEach(({ username }) => {
+      entries.forEach(({ username }, idx) => {
         const div = document.createElement('div');
         div.classList.add('participant');
+        div.style.animationDelay = (idx * 0.07) + 's';
 
         const initial = document.createElement('div');
         initial.classList.add('avatar-initial');
@@ -494,12 +554,8 @@
       await saveParticipant(username, ip);
       await saveIP(ip);
 
-      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
-      infoMsg.style.animation = 'none';
-      void infoMsg.offsetWidth; // animasyon reset için trigger
-      infoMsg.style.animation = 'floatUp 2.5s ease forwards';
-
-      raffleForm.reset();
+      // Toast göster
+      showToastSuccess('Başarıyla katıldınız! Bol şans!');
     } catch {
       errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
       errorMsg.style.display = 'block';
@@ -508,6 +564,22 @@
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
+
+  // Toast Success fonksiyonu
+  function showToastSuccess(msg) {
+    toastSuccessMsg.textContent = msg;
+    toastSuccess.style.display = 'flex';
+    toastSuccess.classList.remove('hide');
+    // Fade-in animasyonu başlar
+    setTimeout(() => {
+      toastSuccess.classList.add('hide');
+      // Fade-out bitince tamamen gizle
+      setTimeout(() => {
+        toastSuccess.style.display = 'none';
+        toastSuccess.classList.remove('hide');
+      }, 600);
+    }, 2500);
+  }
 
   listenParticipants();
 </script>
