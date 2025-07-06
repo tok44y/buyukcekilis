@@ -34,9 +34,9 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI0cHR5YnV5d25sdGRoMTZiN3lpZDFnNXAwOGlucTA5bW8zZWl3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif') no-repeat center center/cover;
+      background: #18191b url('https://www.transparenttextures.com/patterns/hexellence.png');
       z-index: -2;
-      filter: none; /* Bulanıklık kaldırıldı */
+      filter: none;
       will-change: transform;
       animation: subtleMove 30s ease-in-out infinite alternate;
       pointer-events: none;
@@ -588,9 +588,16 @@
 
 <!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ) -->
 <div id="joinedSuccess" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:480px; margin:60px auto 0 auto;">
-  <div style="background:#2e2e2e; color:#e0e0e0; font-size:1.18em; font-weight:900; border-radius:14px; box-shadow:0 0 18px #000a,0 2px 8px #0002; padding:22px 0 18px 0; width:100%; text-align:center; margin-bottom:22px; letter-spacing:1px; animation:joinedFadeIn 0.8s cubic-bezier(.4,1.4,.6,1);">
-    <span style="display:block; font-size:1.05em; margin-bottom:6px; color:#e0e0e0; font-weight:800;">Başarıyla katıldınız!</span>
-    <span style="font-size:0.98em; color:#b0b0b0; font-weight:800;">Kullanıcı adınız: <span id="joinedUsername" style="color:#b0b0b0; font-weight:800;"></span></span>
+  <div class="already-joined-box" style="background:#23232b; border-radius:16px; box-shadow:0 0 24px #000a,0 2px 8px #0002; padding:32px 24px 24px 24px; width:100%; text-align:center; margin-bottom:22px;">
+    <div class="already-joined-header" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+      <span style="font-size:2em; color:#ff4d4d; font-weight:900;">Zaten Katıldın!</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Roblox_Logo_2022.png" style="height:32px;" />
+    </div>
+    <div class="already-joined-message" style="margin-top:18px; color:#e0e0e0; font-size:1.1em;">
+      Çekiliş günü bu sayfadan sonucu öğrenebilirsin.<br>
+      Bol şans! 🚀
+    </div>
+    <div style="margin-top:18px; color:#b0b0b0; font-size:1em;">Kullanıcı adınız: <span id="joinedUsername" style="color:#b0b0b0; font-weight:800;"></span></div>
   </div>
   <div class="participants" id="participants" style="margin-top:0;">
     <h2 style="margin-top:0;">Katılanlar</h2>
