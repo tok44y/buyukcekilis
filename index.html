@@ -23,7 +23,6 @@
       overflow-x: hidden;
       position: relative;
       z-index: 0;
-      background: none;
     }
 
     body::before {
@@ -56,9 +55,18 @@
     }
 
     @keyframes floatUp {
-      0% { opacity: 0; transform: translateY(15px); }
-      50% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-20px); }
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
     }
 
     h1 {
@@ -74,22 +82,6 @@
         0 0 7px #000000cc,
         0 0 10px #000000cc,
         0 0 15px #000000cc;
-    }
-
-    /* Yeni animasyonlu üst başlık */
-    .animated-header {
-      font-weight: 900;
-      font-size: 1.7rem;
-      color: #4CAF50;
-      text-align: center;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
-      text-shadow:
-        0 0 8px #4CAF50cc,
-        0 0 20px #4CAF50aa,
-        0 0 40px #4CAF5077;
-      user-select: none;
-      animation: floatUp 2.5s ease infinite alternate;
     }
 
     p.lead {
@@ -304,38 +296,27 @@
   </style>
 </head>
 <body>
+<!-- geri kalan her şey aynı, logo kaldırıldı -->
 
-<!-- Yeni animasyonlu başlık üstü satır -->
-<h2 class="animated-header">KAÇIRMAYIN! BÜYÜK ÇEKİLİŞ BAŞLADI!</h2>
-
+<!-- buradan sonrası aynı şekilde devam ediyor -->
+<!-- Eğer tekrar eklenecek şey varsa yaz yeter kral -->
 <h1>20 KİŞİYE 1K ROBUX</h1>
 <p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
 
 <div class="container">
   <form id="raffleForm" autocomplete="off">
     <label for="username">Roblox Kullanıcı Adınız:</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      placeholder="Örnek: MarksBlade"
-      required
-      minlength="3"
-      maxlength="20"
-      pattern="^[a-zA-Z0-9_]+$"
-    />
-
+    <input type="text" id="username" name="username" placeholder="Örnek: MarksBlade" required minlength="3" maxlength="20" pattern="^[a-zA-Z0-9_]+$" />
     <div class="terms">
       <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
       <ul>
-        <li>✓ Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></li>
-        <li>✓ Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></li>
-        <li>✓ Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></li>
-        <li>⚠️ Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
-        <li>🎉 Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
+        <li>• Beni takip et → <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></li>
+        <li>• Gruba katıl → <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a></li>
+        <li>• Oyunu beğen &amp; favorilere ekle → <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></li>
+        <li>• Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
+        <li>• Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
       </ul>
     </div>
-
     <button type="submit" id="submitBtn">Çekilişe Katıl</button>
     <div class="error" id="errorMsg" style="display:none;"></div>
     <div class="info" id="infoMsg"></div>
@@ -464,4 +445,29 @@
       return;
     }
 
-   
+    try {
+      await saveParticipant(username, ip);
+      await saveIP(ip);
+
+      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
+      infoMsg.style.animation = 'none';
+      void infoMsg.offsetWidth;
+      infoMsg.style.animation = 'floatUp 2.5s ease forwards';
+
+      raffleForm.reset();
+    } catch {
+      errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
+      errorMsg.style.display = 'block';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Çekilişe Katıl';
+  });
+
+  listenParticipants();
+</script>
+
+</body>
+</html>
+
+
