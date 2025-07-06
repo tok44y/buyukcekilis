@@ -434,6 +434,11 @@
             <span>Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</span>
           </li>
         </ul>
+        <div style="margin-top:18px;">
+          <label for="groupProof"><strong>Gruba katıldığını gösteren ekran görüntüsünü yükle:</strong></label>
+          <input type="file" id="groupProof" accept="image/*" style="margin-top:8px;" />
+          <div id="groupProofPreview" style="margin-top:10px;"></div>
+        </div>
       </div>
       <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
       <div class="step-error" id="step2Error"></div>
@@ -479,7 +484,10 @@
   const step1Error = document.getElementById('step1Error');
   const step2Error = document.getElementById('step2Error');
   const step2Success = document.getElementById('step2Success');
+  const groupProof = document.getElementById('groupProof');
+  const groupProofPreview = document.getElementById('groupProofPreview');
   let currentUsername = '';
+  let groupProofBase64 = '';
 
   async function getUserIP() {
     try {
@@ -532,10 +540,10 @@
     await set(ipRef, true);
   }
 
-  async function saveParticipant(username, ip) {
+  async function saveParticipant(username, ip, groupProof) {
     const participantsRef = ref(database, 'participants');
     const newParticipantRef = push(participantsRef);
-    await set(newParticipantRef, { username, ip });
+    await set(newParticipantRef, { username, ip, groupProof });
   }
 
   function showStep(stepNum) {
@@ -546,13 +554,29 @@
   }
 
   function checkAllTerms() {
-    return chkFollow.checked && chkLike.checked;
+    return chkFollow.checked && chkLike.checked && groupProofBase64;
   }
   function updateSubmitBtn() {
     submitBtn.disabled = !checkAllTerms();
   }
   chkFollow.addEventListener('change', updateSubmitBtn);
   chkLike.addEventListener('change', updateSubmitBtn);
+  groupProof.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    groupProofBase64 = '';
+    groupProofPreview.innerHTML = '';
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        groupProofBase64 = evt.target.result;
+        groupProofPreview.innerHTML = `<img src="${groupProofBase64}" alt="Önizleme" style="max-width:120px;max-height:80px;border-radius:8px;box-shadow:0 0 8px #0003;" />`;
+        updateSubmitBtn();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      updateSubmitBtn();
+    }
+  });
 
   nextBtn.addEventListener('click', async () => {
     step1Error.textContent = '';
@@ -612,7 +636,7 @@
     step2Error.textContent = '';
     step2Success.textContent = '';
     if (!checkAllTerms()) {
-      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizi onaylayın!';
+      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizi ve ekran görüntüsünü yüklediğinizden emin olun!';
       return;
     }
     submitBtn.disabled = true;
@@ -633,10 +657,12 @@
       return;
     }
     try {
-      await saveParticipant(currentUsername, ip);
+      await saveParticipant(currentUsername, ip, groupProofBase64);
       await saveIP(ip);
       step2Success.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
       raffleForm.reset();
+      groupProofBase64 = '';
+      groupProofPreview.innerHTML = '';
       setTimeout(() => {
         showStep(1);
         step2Success.textContent = '';
