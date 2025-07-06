@@ -416,16 +416,16 @@
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
         <ul style="padding-left:0; list-style:none;">
           <li>
-            <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;">
-              <span><strong>Beni takip et</strong> <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></span>
-              <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px;" />
-            </label>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+              <span><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
+              <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+            </div>
           </li>
           <li>
-            <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;">
-              <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></span>
-              <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px;" />
-            </label>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+              <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
+              <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+            </div>
           </li>
           <li style="margin-top:10px;">
             <span>Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</span>
@@ -490,6 +490,8 @@
   const step2Success = document.getElementById('step2Success');
   const groupProof = document.getElementById('groupProof');
   const groupProofPreview = document.getElementById('groupProofPreview');
+  const profileLink = document.getElementById('profileLink');
+  const gameLink = document.getElementById('gameLink');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -665,6 +667,33 @@
     origShowStep(stepNum);
     if (stepNum === 2) onStep2Open();
   }
+
+  // Tikler ilgili linke tıklamadan aktif olmasın
+  chkFollow.disabled = true;
+  chkLike.disabled = true;
+  let followTimer = null;
+  let likeTimer = null;
+  profileLink.addEventListener('click', () => {
+    chkFollow.disabled = true;
+    if (followTimer) clearTimeout(followTimer);
+    followTimer = setTimeout(() => {
+      chkFollow.disabled = false;
+      chkFollow.parentElement.style.opacity = 1;
+    }, 5000);
+    chkFollow.parentElement.style.opacity = 0.6;
+  });
+  gameLink.addEventListener('click', () => {
+    chkLike.disabled = true;
+    if (likeTimer) clearTimeout(likeTimer);
+    likeTimer = setTimeout(() => {
+      chkLike.disabled = false;
+      chkLike.parentElement.style.opacity = 1;
+    }, 5000);
+    chkLike.parentElement.style.opacity = 0.6;
+  });
+  // Başlangıçta tikler pasif ve opaklığı düşük olsun
+  chkFollow.parentElement.style.opacity = 0.6;
+  chkLike.parentElement.style.opacity = 0.6;
 
   listenParticipants();
 </script>
