@@ -389,6 +389,21 @@
       80% { opacity:1; transform: scale(1.03) translateY(-6px); }
       100% { opacity:1; transform: scale(1) translateY(0); }
     }
+
+    .term-main-text {
+      color: #fff !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px;
+      font-size: 1.08em;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    .follow-wrap, .like-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
   </style>
 </head>
 <body>
@@ -425,8 +440,8 @@
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
         <ul style="padding-left:0; list-style:none;">
           <li>
-            <div id="followWrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
-              <span style="color:#fff;font-weight:800;letter-spacing:0.5px;"><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
+            <div id="followWrap" class="follow-wrap">
+              <span class="term-main-text"><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
               <div style="display:flex;align-items:center;gap:6px;">
                 <span id="followCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
                 <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
@@ -434,8 +449,8 @@
             </div>
           </li>
           <li>
-            <div id="likeWrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
-              <span style="color:#fff;font-weight:800;letter-spacing:0.5px;"><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
+            <div id="likeWrap" class="like-wrap">
+              <span class="term-main-text"><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
               <div style="display:flex;align-items:center;gap:6px;">
                 <span id="likeCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
                 <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
@@ -477,16 +492,7 @@
 <div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
   <div class="joined-anim" style="max-width:480px;margin:60px auto 0 auto;background:linear-gradient(135deg,#23232bde 80%,#ffd70022 100%);border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;animation: joinedFadeIn 1.1s cubic-bezier(.4,1.4,.6,1);">
     <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
-      <div style="font-size:2.1em;font-weight:900;color:#ffd700;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;">✔ ÇEKİLİŞE KATILDINIZ</div>
-      <div style="font-size:1.18em;color:#fff;">
-        <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
-      </div>
-      <div style="color:#43e97b;font-size:1.15em;font-weight:800;text-shadow:0 0 8px #43e97b88,0 0 16px #000a;letter-spacing:1px;">Başarıyla katıldınız!</div>
-      <div style="margin:18px 0 0 0; background:linear-gradient(135deg,#19191f 80%,#ffd70022 100%); border-radius:14px; padding:18px 18px 12px 18px; box-shadow:0 0 12px #0007; color:#eee; width:100%; max-width:370px;">
-        <div style="font-size:1.08em; font-weight:700; margin-bottom:8px; color:#ffd700;">Çekiliş sonuçlanmasına kalan süre:</div>
-        <div id="countdownTimer" style="font-size:1.3em; font-weight:900; letter-spacing:1px; color:#fff; text-shadow:0 0 8px #000a;"></div>
-      </div>
-      <div style="color:#bbb;font-size:1em;">Katılımcılar arasında adınızı vurgulu görebilirsiniz.</div>
+      <div style="font-size:2.1em;font-weight:900;color:#fff;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;">ÇEKİLİŞE BAŞARIYLA KATILDINIZ</div>
       <div class="participants" id="participants" style="margin-top:18px;">
         <h2>Katılanlar</h2>
         <div id="participantList">Yükleniyor...</div>
