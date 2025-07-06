@@ -669,6 +669,8 @@
   const raffleForm = document.getElementById('raffleForm');
   const usernameInput = document.getElementById('username');
   const submitBtn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
   const chkFollow = document.getElementById('chkFollow');
   const chkLike = document.getElementById('chkLike');
@@ -687,8 +689,9 @@
   const followWrap = document.getElementById('followWrap');
   const likeWrap = document.getElementById('likeWrap');
   const mainContainer = document.getElementById('mainContainer');
+  const alreadyJoined = document.getElementById('alreadyJoined');
   const joinedUsername = document.getElementById('joinedUsername');
-
+  const countdownTimer = document.getElementById('countdownTimer');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -712,6 +715,10 @@
         return;
       }
       const entries = Object.values(data);
+      if (entries.length === 0) {
+        participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
+        return;
+      }
       entries.forEach(({ username }) => {
         const div = document.createElement('div');
         div.classList.add('participant');
@@ -727,10 +734,9 @@
         div.appendChild(name);
         participantList.appendChild(div);
       });
-
-      // Kullanıcı adı başlıkta da gösterilsin
-      if (myUsername && joinedUsername) {
-        joinedUsername.textContent = myUsername;
+      // alreadyJoined ekranında kendi nickini küçük göster
+      if (myUsername && document.getElementById('joinedUsername')) {
+        document.getElementById('joinedUsername').textContent = myUsername;
       }
     });
   }
@@ -764,11 +770,11 @@
   function checkAllTerms() {
     return chkFollow.checked && chkLike.checked && groupProof.value;
   }
-
   function updateSubmitBtn() {
     submitBtn.disabled = !checkAllTerms();
   }
-
+  chkFollow.addEventListener('change', updateSubmitBtn);
+  chkLike.addEventListener('change', updateSubmitBtn);
   groupProof.addEventListener('change', (e) => {
     const file = e.target.files[0];
     groupProofBase64 = '';
@@ -786,7 +792,7 @@
     }
   });
 
-  nextBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', async () => {
     step1Error.textContent = '';
     const username = usernameInput.value.trim();
     if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
@@ -802,27 +808,25 @@
     step2Error.textContent = '';
     step2Success.textContent = '';
     if (!checkAllTerms()) {
-      step2Error.textContent = 'Lütfen tüm şartları yerine getirin.';
+      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizden ve ekran görüntüsünü yüklediğinizden emin olun!';
       return;
     }
     submitBtn.disabled = true;
     submitBtn.textContent = 'Katılım Kaydediliyor...';
-
     const ip = await getUserIP();
     if (!ip) {
-      step2Error.textContent = 'IP alınamadı.';
+      step2Error.textContent = 'IP adresiniz alınamadı.';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
     const ipExists = await checkIPExists(ip);
     if (ipExists) {
-      step2Error.textContent = 'Bu IP ile zaten katılım yapılmış.';
+      step2Error.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
-
     try {
       await saveParticipant(currentUsername, ip);
       await saveIP(ip);
@@ -832,63 +836,15 @@
       mainContainer.style.display = 'none';
       document.getElementById('joinedSuccess').style.display = 'flex';
       listenParticipants(currentUsername);
+      step2Success.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Çekilişe Katıl';
     } catch {
-      step2Error.textContent = 'Kayıt hatası!';
+      step2Error.textContent = 'Kayıt sırasında hata oluştu.';
     }
-
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
-
-  profileLink.addEventListener('click', () => startCountdown('follow'));
-  gameLink.addEventListener('click', () => startCountdown('like'));
-
-  function startCountdown(type) {
-    const seconds = type === 'follow' ? 7 : 25;
-    const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
-    const chk = type === 'follow' ? chkFollow : chkLike;
-    const wrap = type === 'follow' ? followWrap : likeWrap;
-
-    chk.disabled = true;
-    countdownSpan.textContent = 'Yükleniyor...';
-    wrap.style.opacity = 0.6;
-
-    setTimeout(() => {
-      chk.disabled = false;
-      countdownSpan.textContent = '';
-      wrap.style.opacity = 1;
-    }, seconds * 1000);
-  }
-
-  // Sayfa açılışında IP kontrolü
-  window.addEventListener('DOMContentLoaded', async () => {
-    const ip = await getUserIP();
-    if (!ip) return;
-
-    const ipKey = ip.replace(/\./g, '-');
-    const ipRef = ref(database, 'ips/' + ipKey);
-    const snapshot = await get(ipRef);
-    if (snapshot.exists()) {
-      const participantsRef = ref(database, 'participants');
-      const snap = await get(participantsRef);
-      let myUsername = '';
-      if (snap.exists()) {
-        const entries = Object.values(snap.val());
-        const found = entries.find(e => e.ip === ip);
-        if (found) myUsername = found.username;
-      }
-      mainContainer.style.display = 'none';
-      document.getElementById('joinedSuccess').style.display = 'flex';
-      joinedUsername.textContent = myUsername;
-      listenParticipants(myUsername);
-    } else {
-      mainContainer.style.display = 'block';
-      document.getElementById('joinedSuccess').style.display = 'none';
-      listenParticipants();
-    }
-  });
-</script>
-
 
   // Tikler tamamen bağımsız, her biri sadece kendi linkine ve süresine bağlı
   let followTimer = null;
