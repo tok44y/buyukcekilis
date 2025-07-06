@@ -36,7 +36,7 @@
       height: 100vh;
       background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI0cHR5YnV5d25sdGRoMTZiN3lpZDFnNXAwOGlucTA5bW8zZWl3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif') no-repeat center center/cover;
       z-index: -2;
-      filter: brightness(1) saturate(1.2);
+      filter: none; /* Bulanıklık kaldırıldı */
       will-change: transform;
       animation: subtleMove 30s ease-in-out infinite alternate;
       pointer-events: none;
@@ -49,7 +49,7 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 15, 15, 0.55);
+      background: rgba(15, 15, 15, 0.15); /* Daha az koyu */
       z-index: -1;
       pointer-events: none;
     }
@@ -292,14 +292,14 @@
     }
 
     .participant.me {
-      background: #f5f5f5 !important;
-      color: #23232b !important;
+      background: #444 !important; /* Beyazdan grimsiye */
+      color: #e0e0e0 !important;
       font-weight: 900;
       border-radius: 8px;
       box-shadow: 0 0 8px #0002;
     }
     .participant.me .avatar-initial {
-      background: #e0e0e0;
+      background: #b0b0b0;
       color: #23232b;
       border: 1.5px solid #bbb;
       box-shadow: 0 0 4px #bbb inset;
@@ -560,20 +560,43 @@
       max-width: 420px;
       width: 100%;
     }
+
+    #joinedSuccess > div:first-child {
+      background: #2e2e2e !important; /* Yeşilden griye */
+      color: #e0e0e0 !important;
+    }
+    #joinedSuccess #joinedUsername {
+      color: #b0b0b0 !important; /* Temaya uygun açık gri */
+      font-weight: 800;
+    }
+    .participant.me {
+      background: #444 !important; /* Beyazdan grimsiye */
+      color: #e0e0e0 !important;
+      font-weight: 900;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #0002;
+    }
+    .participant.me .avatar-initial {
+      background: #b0b0b0;
+      color: #23232b;
+      border: 1.5px solid #bbb;
+      box-shadow: 0 0 4px #bbb inset;
+    }
   </style>
 </head>
 <body>
 
 <!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ) -->
 <div id="joinedSuccess" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:480px; margin:60px auto 0 auto;">
-  <div style="background:#43e97b; color:#23232b; font-size:1.18em; font-weight:900; border-radius:14px; box-shadow:0 0 18px #000a,0 2px 8px #0002; padding:22px 0 18px 0; width:100%; text-align:center; margin-bottom:22px; letter-spacing:1px; animation:joinedFadeIn 0.8s cubic-bezier(.4,1.4,.6,1);">
-    <span style="display:block; font-size:1.05em; margin-bottom:6px; color:#23232b; font-weight:800;">Başarıyla katıldınız!</span>
-    <span style="font-size:0.98em; color:#23232b; font-weight:700;">Kullanıcı adınız: <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span></span>
+  <div style="background:#2e2e2e; color:#e0e0e0; font-size:1.18em; font-weight:900; border-radius:14px; box-shadow:0 0 18px #000a,0 2px 8px #0002; padding:22px 0 18px 0; width:100%; text-align:center; margin-bottom:22px; letter-spacing:1px; animation:joinedFadeIn 0.8s cubic-bezier(.4,1.4,.6,1);">
+    <span style="display:block; font-size:1.05em; margin-bottom:6px; color:#e0e0e0; font-weight:800;">Başarıyla katıldınız!</span>
+    <span style="font-size:0.98em; color:#b0b0b0; font-weight:800;">Kullanıcı adınız: <span id="joinedUsername" style="color:#b0b0b0; font-weight:800;"></span></span>
   </div>
   <div class="participants" id="participants" style="margin-top:0;">
-    <h2>Katılanlar</h2>
+    <h2 style="margin-top:0;">Katılanlar</h2>
     <div id="participantList">Yükleniyor...</div>
   </div>
+  <div style="margin-top:24px; color:#ff4d4d; font-weight:900; font-size:1.1em; text-align:center;">Çekiliş bu sayfada açıklanacak</div>
 </div>
 
 <h1>20 KİŞİYE 1K ROBUX</h1>
@@ -594,7 +617,7 @@
         pattern="^[a-zA-Z0-9_]+$"
       />
       <button type="button" id="nextBtn" class="step-btn">Devam Et</button>
-      <div style="margin-top:16px; color:#ffb300; font-weight:700; text-align:center; font-size:1.05em; text-shadow:0 0 6px #0002;">
+      <div style="margin-top:16px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.05em; text-shadow:0 0 6px #0002;">
         <strong>•</strong> Kullanıcı adınızı <strong>doğru</strong> giriniz. Şartlar ve katılım bilgileriniz <strong>kontrol edilecektir!</strong>
       </div>
       <div class="step-error" id="step1Error"></div>
@@ -639,7 +662,7 @@
         </div>
       </div>
       <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
-      <div id="submitInfo" style="margin-top:14px; color:#ffb300; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
+      <div id="submitInfo" style="margin-top:14px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
         <strong>•</strong> Şartlar yerine getirilmeden buton aktif olmayacaktır.
       </div>
       <div class="step-error" id="step2Error"></div>
@@ -937,5 +960,4 @@
 
 </body>
 </html>
-
 
