@@ -233,10 +233,10 @@
     }
 
     .participants {
-      margin-top: 50px;
+      margin-top: 22px;
       max-height: 280px;
       overflow-y: auto;
-      background: #121212cc;
+      background: linear-gradient(135deg, #19191f 80%, #ffd70022 100%);
       border-radius: 16px;
       padding: 18px 22px;
       font-size: 14px;
@@ -248,13 +248,14 @@
       z-index: 1;
       backdrop-filter: saturate(150%) blur(6px);
       border: 1px solid #333;
+      color: #fff;
     }
 
     .participants h2 {
       margin-top: 0;
       margin-bottom: 18px;
       font-weight: 700;
-      color: #eee;
+      color: #ffd700;
       text-shadow: 0 0 4px #000000cc;
     }
 
@@ -263,6 +264,9 @@
       align-items: center;
       padding: 10px 14px;
       border-bottom: 1px solid #222;
+      background: none;
+      color: #fff;
+      font-weight: 600;
     }
 
     .participant:last-child {
@@ -284,6 +288,21 @@
       border: 1.5px solid #555;
       text-transform: uppercase;
       box-shadow: 0 0 4px #000000cc inset;
+    }
+
+    .participant.me {
+      background: linear-gradient(90deg, #23232b 60%, #ffd700 100%);
+      color: #23232b !important;
+      font-weight: 900;
+      border-radius: 10px;
+      box-shadow: 0 0 16px #ffd70055;
+      border-bottom: 1.5px solid #ffd700;
+    }
+    .participant.me .avatar-initial {
+      background: #ffd700;
+      color: #23232b;
+      border: 1.5px solid #ffd700;
+      box-shadow: 0 0 8px #ffd70099 inset;
     }
 
     .participants::-webkit-scrollbar {
@@ -576,10 +595,7 @@
         const div = document.createElement('div');
         div.classList.add('participant');
         if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
-          div.style.background = 'linear-gradient(90deg,#23232b 60%,#ffd70022 100%)';
-          div.style.color = '#ffd700';
-          div.style.fontWeight = 'bold';
-          div.style.boxShadow = '0 0 12px #ffd70055';
+          div.classList.add('me');
         }
         const initial = document.createElement('div');
         initial.classList.add('avatar-initial');
