@@ -418,13 +418,19 @@
           <li>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
               <span><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
-              <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span id="followCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
+                <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+              </div>
             </div>
           </li>
           <li>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
               <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
-              <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span id="likeCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
+                <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+              </div>
             </div>
           </li>
           <li style="margin-top:10px;">
@@ -492,6 +498,8 @@
   const groupProofPreview = document.getElementById('groupProofPreview');
   const profileLink = document.getElementById('profileLink');
   const gameLink = document.getElementById('gameLink');
+  const followCountdown = document.getElementById('followCountdown');
+  const likeCountdown = document.getElementById('likeCountdown');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -668,28 +676,49 @@
     if (stepNum === 2) onStep2Open();
   }
 
-  // Tikler ilgili linke tıklamadan aktif olmasın
+  // Tikler ilgili linke tıklamadan aktif olmasın, her biri bağımsız ve 15 saniye beklemeli
   chkFollow.disabled = true;
   chkLike.disabled = true;
   let followTimer = null;
   let likeTimer = null;
+  let followCount = 0;
+  let likeCount = 0;
+  function startCountdown(type) {
+    let seconds = 15;
+    const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
+    const chk = type === 'follow' ? chkFollow : chkLike;
+    if (type === 'follow') {
+      if (followTimer) clearInterval(followTimer);
+    } else {
+      if (likeTimer) clearInterval(likeTimer);
+    }
+    chk.disabled = true;
+    countdownSpan.textContent = seconds + ' sn';
+    let timer = setInterval(() => {
+      seconds--;
+      countdownSpan.textContent = seconds > 0 ? (seconds + ' sn') : '';
+      if (seconds <= 0) {
+        clearInterval(timer);
+        chk.disabled = false;
+        countdownSpan.textContent = '';
+      }
+    }, 1000);
+    if (type === 'follow') followTimer = timer;
+    else likeTimer = timer;
+  }
   profileLink.addEventListener('click', () => {
-    chkFollow.disabled = true;
-    if (followTimer) clearTimeout(followTimer);
-    followTimer = setTimeout(() => {
-      chkFollow.disabled = false;
-      chkFollow.parentElement.style.opacity = 1;
-    }, 5000);
+    startCountdown('follow');
     chkFollow.parentElement.style.opacity = 0.6;
+    setTimeout(() => {
+      chkFollow.parentElement.style.opacity = 1;
+    }, 15000);
   });
   gameLink.addEventListener('click', () => {
-    chkLike.disabled = true;
-    if (likeTimer) clearTimeout(likeTimer);
-    likeTimer = setTimeout(() => {
-      chkLike.disabled = false;
-      chkLike.parentElement.style.opacity = 1;
-    }, 5000);
+    startCountdown('like');
     chkLike.parentElement.style.opacity = 0.6;
+    setTimeout(() => {
+      chkLike.parentElement.style.opacity = 1;
+    }, 15000);
   });
   // Başlangıçta tikler pasif ve opaklığı düşük olsun
   chkFollow.parentElement.style.opacity = 0.6;
