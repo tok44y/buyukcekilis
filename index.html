@@ -454,6 +454,9 @@
         </div>
       </div>
       <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
+      <div id="submitInfo" style="margin-top:14px; color:#ffb300; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
+        <strong>•</strong> Şartlar yerine getirilmeden buton aktif olmayacaktır.
+      </div>
       <div class="step-error" id="step2Error"></div>
       <div class="step-success" id="step2Success"></div>
     </div>
@@ -468,9 +471,14 @@
 <div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
   <div style="max-width:480px;margin:60px auto 0 auto;background:#23232bde;border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
-      <div style="font-size:2.1em;font-weight:900;color:#ffd700;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;">✔ ZATEN KATILDINIZ</div>
+      <div style="font-size:2.1em;font-weight:900;color:#ffd700;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;">✔ ÇEKİLİŞE KATILDINIZ</div>
       <div style="font-size:1.18em;color:#fff;">
         <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
+      </div>
+      <div style="color:#4CAF50;font-size:1.1em;font-weight:700;">Başarıyla katıldınız!</div>
+      <div style="margin:18px 0 0 0; background:#19191f; border-radius:14px; padding:18px 18px 12px 18px; box-shadow:0 0 12px #0007; color:#eee; width:100%; max-width:370px;">
+        <div style="font-size:1.08em; font-weight:700; margin-bottom:8px; color:#ffd700;">Çekiliş sonuçlanmasına kalan süre:</div>
+        <div id="countdownTimer" style="font-size:1.3em; font-weight:900; letter-spacing:1px; color:#fff; text-shadow:0 0 8px #000a;"></div>
       </div>
       <div style="color:#bbb;font-size:1em;">Katılımcılar arasında adınızı vurgulu görebilirsiniz.</div>
       <div class="participants" id="participants" style="margin-top:18px;">
@@ -524,6 +532,7 @@
   const mainContainer = document.getElementById('mainContainer');
   const alreadyJoined = document.getElementById('alreadyJoined');
   const joinedUsername = document.getElementById('joinedUsername');
+  const countdownTimer = document.getElementById('countdownTimer');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -543,10 +552,14 @@
       const data = snapshot.val();
       participantList.innerHTML = '';
       if (!data) {
-        participantList.innerHTML = '<p>Henüz katılım yok.</p>';
+        participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
         return;
       }
       const entries = Object.values(data);
+      if (entries.length === 0) {
+        participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
+        return;
+      }
       entries.forEach(({ username }) => {
         const div = document.createElement('div');
         div.classList.add('participant');
@@ -657,7 +670,7 @@
     try {
       await saveParticipant(currentUsername, ip);
       await saveIP(ip);
-      step2Success.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
+      step2Success.textContent = 'Çekilişe katıldınız!\nBaşarıyla katıldınız! 🎉';
       raffleForm.reset();
       groupProofBase64 = '';
       groupProofPreview.innerHTML = '';
@@ -717,6 +730,25 @@
   chkFollow.disabled = true;
   chkLike.disabled = true;
 
+  // Geri sayım fonksiyonu (örnek: 30 Haziran 2024 23:59)
+  function startCountdownTimer() {
+    const target = new Date('2024-06-30T23:59:00+03:00');
+    function update() {
+      const now = new Date();
+      let diff = Math.max(0, target - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const mins = Math.floor(diff / (1000 * 60));
+      diff -= mins * (1000 * 60);
+      const secs = Math.floor(diff / 1000);
+      countdownTimer.textContent = `${days}g ${hours}s ${mins}dk ${secs}sn`;
+    }
+    update();
+    setInterval(update, 1000);
+  }
+
   // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
   window.addEventListener('DOMContentLoaded', async () => {
     const ip = await getUserIP();
@@ -738,6 +770,7 @@
       alreadyJoined.style.display = 'block';
       joinedUsername.textContent = myUsername;
       listenParticipants(myUsername);
+      startCountdownTimer();
     } else {
       mainContainer.style.display = 'block';
       alreadyJoined.style.display = 'none';
