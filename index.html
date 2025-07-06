@@ -869,6 +869,8 @@
         mainContainer.style.display = 'none';
         document.querySelector('.raffle-panel-full').style.display = 'block';
         document.getElementById('joinedPanel').style.display = 'block';
+        // Sayfanın geri kalanını gizle
+        document.body.querySelectorAll('body > *:not(.raffle-panel-full):not(#successModal)').forEach(el => el.style.display = 'none');
         listenParticipants(currentUsername);
         startCountdownTimer && startCountdownTimer();
         step2Success.textContent = '';
