@@ -236,7 +236,7 @@
       margin-top: 22px;
       max-height: 280px;
       overflow-y: auto;
-      background: linear-gradient(135deg, #19191f 80%, #ffd70022 100%);
+      background: #18191bcc;
       border-radius: 16px;
       padding: 18px 22px;
       font-size: 14px;
@@ -248,14 +248,14 @@
       z-index: 1;
       backdrop-filter: saturate(150%) blur(6px);
       border: 1px solid #333;
-      color: #fff;
+      color: #f5f5f5;
     }
 
     .participants h2 {
       margin-top: 0;
       margin-bottom: 18px;
       font-weight: 700;
-      color: #ffd700;
+      color: #f5f5f5;
       text-shadow: 0 0 4px #000000cc;
     }
 
@@ -267,6 +267,7 @@
       background: none;
       color: #fff;
       font-weight: 600;
+      border-radius: 0;
     }
 
     .participant:last-child {
@@ -291,18 +292,17 @@
     }
 
     .participant.me {
-      background: linear-gradient(90deg, #23232b 60%, #ffd700 100%);
+      background: #f5f5f5 !important;
       color: #23232b !important;
       font-weight: 900;
-      border-radius: 10px;
-      box-shadow: 0 0 16px #ffd70055;
-      border-bottom: 1.5px solid #ffd700;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #0002;
     }
     .participant.me .avatar-initial {
-      background: #ffd700;
+      background: #e0e0e0;
       color: #23232b;
-      border: 1.5px solid #ffd700;
-      box-shadow: 0 0 8px #ffd70099 inset;
+      border: 1.5px solid #bbb;
+      box-shadow: 0 0 4px #bbb inset;
     }
 
     .participants::-webkit-scrollbar {
@@ -704,12 +704,16 @@
       groupProofBase64 = '';
       groupProofPreview.innerHTML = '';
       setTimeout(() => {
-        showStep(1);
+        // Katılım sonrası reload olmadan alreadyJoined ekranına geç
+        mainContainer.style.display = 'none';
+        alreadyJoined.style.display = 'block';
+        joinedUsername.textContent = currentUsername;
+        listenParticipants(currentUsername);
+        startCountdownTimer && startCountdownTimer();
         step2Success.textContent = '';
         submitBtn.disabled = true;
         submitBtn.textContent = 'Çekilişe Katıl';
-        window.location.reload();
-      }, 2500);
+      }, 1500);
     } catch {
       step2Error.textContent = 'Kayıt sırasında hata oluştu.';
     }
