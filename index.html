@@ -416,15 +416,15 @@
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
         <ul style="padding-left:0; list-style:none;">
           <li>
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="chkFollow" style="accent-color:#4CAF50; width:18px; height:18px;" />
+            <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;">
               <span><strong>Beni takip et</strong> <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank">Roblox Profilim</a></span>
+              <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px;" />
             </label>
           </li>
           <li>
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="chkLike" style="accent-color:#4CAF50; width:18px; height:18px;" />
+            <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;">
               <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu</a></span>
+              <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px;" />
             </label>
           </li>
           <li style="margin-top:10px;">
@@ -434,6 +434,10 @@
             <span>Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</span>
           </li>
         </ul>
+        <div style="margin:18px 0 10px 0;">
+          <strong>Grup Linki: </strong>
+          <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a>
+        </div>
         <div style="margin-top:18px;">
           <label for="groupProof"><strong>Gruba katıldığını gösteren ekran görüntüsünü yükle:</strong></label>
           <input type="file" id="groupProof" accept="image/*" style="margin-top:8px;" />
@@ -633,6 +637,34 @@
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
+
+  function setTermsDisabled(disabled) {
+    chkFollow.disabled = disabled;
+    chkLike.disabled = disabled;
+    groupProof.disabled = disabled;
+    if (disabled) {
+      chkFollow.parentElement.style.opacity = 0.6;
+      chkLike.parentElement.style.opacity = 0.6;
+      groupProof.style.opacity = 0.6;
+    } else {
+      chkFollow.parentElement.style.opacity = 1;
+      chkLike.parentElement.style.opacity = 1;
+      groupProof.style.opacity = 1;
+    }
+  }
+  // Şartlar adımı açıldığında 5 saniye kilitli
+  function onStep2Open() {
+    setTermsDisabled(true);
+    setTimeout(() => {
+      setTermsDisabled(false);
+    }, 5000);
+  }
+  // step2 açıldığında tetikle
+  const origShowStep = showStep;
+  showStep = function(stepNum) {
+    origShowStep(stepNum);
+    if (stepNum === 2) onStep2Open();
+  }
 
   listenParticipants();
 </script>
