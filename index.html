@@ -585,50 +585,8 @@
       step1Error.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
       return;
     }
-    nextBtn.disabled = true;
-    nextBtn.textContent = 'Kontrol ediliyor...';
-    // Kullanıcı adından userId çek
-    let userId = null;
-    try {
-      const res = await fetch(`https://api.roblox.com/users/get-by-username?username=${encodeURIComponent(username)}`);
-      const data = await res.json();
-      if (data && data.Id) {
-        userId = data.Id;
-      } else {
-        step1Error.textContent = 'Kullanıcı bulunamadı.';
-        nextBtn.disabled = false;
-        nextBtn.textContent = 'Devam Et';
-        return;
-      }
-    } catch {
-      step1Error.textContent = 'Kullanıcı kontrolü sırasında hata oluştu.';
-      nextBtn.disabled = false;
-      nextBtn.textContent = 'Devam Et';
-      return;
-    }
-    // Grup üyeliği kontrolü
-    const groupId = 35669821;
-    try {
-      const groupRes = await fetch(`https://groups.roblox.com/v1/groups/${groupId}/users/${userId}`);
-      if (groupRes.status === 200) {
-        const groupData = await groupRes.json();
-        if (groupData && groupData.errors && groupData.errors.length > 0) {
-          step1Error.textContent = 'Gruba katıldığınızdan emin olun!';
-          nextBtn.disabled = false;
-          nextBtn.textContent = 'Devam Et';
-          return;
-        }
-        // Başarılı
-        currentUsername = username;
-        showStep(2);
-      } else {
-        step1Error.textContent = 'Grup üyeliği kontrolü başarısız.';
-      }
-    } catch {
-      step1Error.textContent = 'Grup üyeliği kontrolü sırasında hata oluştu.';
-    }
-    nextBtn.disabled = false;
-    nextBtn.textContent = 'Devam Et';
+    currentUsername = username;
+    showStep(2);
   });
 
   raffleForm.addEventListener('submit', async (e) => {
