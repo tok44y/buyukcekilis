@@ -684,7 +684,7 @@
   let followCount = 0;
   let likeCount = 0;
   function startCountdown(type) {
-    let seconds = 15;
+    let seconds = type === 'follow' ? 7 : 25;
     const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
     const chk = type === 'follow' ? chkFollow : chkLike;
     if (type === 'follow') {
@@ -711,14 +711,14 @@
     chkFollow.parentElement.style.opacity = 0.6;
     setTimeout(() => {
       chkFollow.parentElement.style.opacity = 1;
-    }, 15000);
+    }, 7000);
   });
   gameLink.addEventListener('click', () => {
     startCountdown('like');
     chkLike.parentElement.style.opacity = 0.6;
     setTimeout(() => {
       chkLike.parentElement.style.opacity = 1;
-    }, 15000);
+    }, 25000);
   });
   // Başlangıçta tikler pasif ve opaklığı düşük olsun
   chkFollow.parentElement.style.opacity = 0.6;
