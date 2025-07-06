@@ -458,12 +458,61 @@
       -webkit-text-fill-color: initial;
       background-clip: initial;
     }
+
+    .raffle-panel {
+      width: 100vw;
+      min-height: 100vh;
+      background: #1f1f1fdd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 10;
+    }
+    .raffle-announcement-panel {
+      margin-top: 48px;
+      background: #23232bcc;
+      border-radius: 18px;
+      padding: 32px 38px 28px 38px;
+      box-shadow: 0 0 32px #000a, 0 2px 8px #0002;
+      color: #f5f5f5;
+      font-size: 1.18em;
+      font-weight: 800;
+      text-align: center;
+      max-width: 540px;
+      width: 100%;
+    }
+    .joined-anim {
+      background: #1f1f1fdd !important;
+      box-shadow: 0 0 30px #000000dd, inset 0 0 10px #444444bb !important;
+      border: 1px solid #333 !important;
+      border-radius: 16px !important;
+      margin-top: 32px !important;
+      padding: 32px 24px 24px 24px !important;
+      max-width: 480px !important;
+      width: 100%;
+    }
+    .joined-anim .participants {
+      margin-top: 28px;
+      background: #23232bcc;
+      border-radius: 14px;
+      box-shadow: 0 0 18px #000a, 0 2px 8px #0002;
+      border: 1px solid #333;
+      color: #f5f5f5;
+      padding: 18px 18px;
+      max-width: 420px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
 
-<div class="raffle-announcement" style="margin-bottom:0;">
-  <strong>Çekiliş 30 Haziran 2024 saat 23:59'da sona erecek! Kazananlar bu sayfada açıklanacaktır.</strong>
+<div class="raffle-panel">
+  <div class="raffle-announcement-panel">
+    <strong>Çekiliş 30 Haziran 2024 saat 23:59'da sona erecek! Kazananlar bu sayfada açıklanacaktır.</strong>
+  </div>
 </div>
 
 <h1>20 KİŞİYE 1K ROBUX</h1>
@@ -538,13 +587,13 @@
   </form>
 
   <div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
-    <div class="joined-anim" style="max-width:480px;margin:60px auto 0 auto;background:#18191bcc;border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;animation: joinedFadeIn 1.1s cubic-bezier(.4,1.4,.6,1);">
+    <div class="joined-anim">
       <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
         <div style="font-size:1.18em;color:#fff;">
           <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
         </div>
         <div style="color:#43e97b;font-size:1.15em;font-weight:800;text-shadow:0 0 8px #43e97b88,0 0 16px #000a;letter-spacing:1px;">Başarıyla katıldınız!</div>
-        <div class="participants" id="participants" style="margin-top:18px;">
+        <div class="participants" id="participants">
           <h2>Katılanlar</h2>
           <div id="participantList">Yükleniyor...</div>
         </div>
