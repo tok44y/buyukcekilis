@@ -4,18 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>20 KİŞİYE 1K ROBUX ÇEKİLİŞİ</title>
-  <meta name="description" content="Roblox 1K Robux çekilişi! Katıl, şansını dene. Katılımcı sayısı, kazananlar ve daha fazlası burada!">
-  <meta property="og:title" content="20 Kişiye 1K Robux Çekilişi">
-  <meta property="og:description" content="Roblox 1K Robux çekilişi! Katıl, şansını dene. Katılımcı sayısı, kazananlar ve daha fazlası burada!">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://seninsiten.com">
-  <meta property="og:image" content="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI0cHR5YnV5d25sdGRoMTZiN3lpZDFnNXAwOGlucTA5bW8zZWl3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif">
-  <link rel="icon" href="https://www.roblox.com/favicon.ico">
-  <link rel="manifest" href="/manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       padding: 0;
@@ -29,8 +23,10 @@
       overflow-x: hidden;
       position: relative;
       z-index: 0;
-      background: none;
+      background: none; /* Background GIF artık ::before'da */
     }
+
+    /* GIF arka plan */
     body::before {
       content: "";
       position: fixed;
@@ -44,6 +40,8 @@
       animation: subtleMove 30s ease-in-out infinite alternate;
       pointer-events: none;
     }
+
+    /* Yarı saydam koyu katman - kontrast için */
     body::after {
       content: "";
       position: fixed;
@@ -54,15 +52,27 @@
       z-index: -1;
       pointer-events: none;
     }
+
     @keyframes subtleMove {
       0% { transform: scale(1) translate(0, 0); }
       100% { transform: scale(1.03) translate(10px, 10px); }
     }
+
     @keyframes floatUp {
-      0% { opacity: 0; transform: translateY(15px);}
-      50% { opacity: 1; transform: translateY(0);}
-      100% { opacity: 0; transform: translateY(-20px);}
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
     }
+
     h1 {
       font-weight: 900;
       font-size: 3rem;
@@ -72,7 +82,10 @@
       letter-spacing: 3px;
       user-select: none;
       text-align: center;
-      text-shadow: 0 0 7px #000000cc, 0 0 10px #000000cc, 0 0 15px #000000cc;
+      text-shadow:
+        0 0 7px #000000cc,
+        0 0 10px #000000cc,
+        0 0 15px #000000cc;
     }
     p.lead {
       max-width: 480px;
@@ -82,20 +95,25 @@
       font-size: 1.2rem;
       margin-bottom: 40px;
       user-select: none;
-      text-shadow: 0 0 4px #000000aa;
+      text-shadow:
+        0 0 4px #000000aa;
     }
+
     .container {
       background: #1f1f1fdd;
       padding: 35px 40px;
       border-radius: 16px;
       max-width: 480px;
       width: 100%;
-      box-shadow: 0 0 30px #000000dd, inset 0 0 10px #444444bb;
+      box-shadow:
+        0 0 30px #000000dd,
+        inset 0 0 10px #444444bb;
       position: relative;
       z-index: 1;
       backdrop-filter: saturate(180%) blur(8px);
       border: 1px solid #333;
     }
+
     label {
       display: block;
       font-weight: 700;
@@ -103,7 +121,8 @@
       color: #eee;
       user-select: none;
     }
-    input[type="text"], input[type="email"] {
+
+    input[type="text"] {
       width: 100%;
       padding: 16px 20px;
       font-size: 17px;
@@ -115,13 +134,13 @@
       transition: border-color 0.35s ease, box-shadow 0.35s ease;
       box-shadow: inset 0 0 6px #111;
       backdrop-filter: blur(4px);
-      margin-bottom: 10px;
     }
-    input[type="text"]:focus, input[type="email"]:focus {
+    input[type="text"]:focus {
       border-color: #bbb;
       box-shadow: 0 0 12px #aaa;
       background: #3a3a3acc;
     }
+
     button {
       width: 100%;
       padding: 18px 0;
@@ -133,7 +152,9 @@
       border: none;
       border-radius: 16px;
       cursor: pointer;
-      box-shadow: 0 0 20px #ffffffcc, inset 0 0 6px #999;
+      box-shadow:
+        0 0 20px #ffffffcc,
+        inset 0 0 6px #999;
       user-select: none;
       transition: background 0.4s ease, box-shadow 0.4s ease;
     }
@@ -147,6 +168,7 @@
       box-shadow: none;
       color: #bbb;
     }
+
     .error {
       color: #ff4d4d;
       margin-top: 18px;
@@ -160,12 +182,15 @@
       font-weight: 700;
       color: #4CAF50;
       user-select: none;
-      text-shadow: 0 0 8px #4CAF50cc, 0 0 20px #4CAF50aa;
+      text-shadow:
+        0 0 8px #4CAF50cc,
+        0 0 20px #4CAF50aa;
       animation: floatUp 2.5s ease forwards;
       pointer-events: none;
       min-height: 26px;
       display: inline-block;
     }
+
     .terms {
       margin-top: 36px;
       background: #292929cc;
@@ -179,8 +204,16 @@
       backdrop-filter: blur(5px);
       border: 1px solid #444;
     }
-    .terms ul { list-style: none; padding-left: 0; }
-    .terms li { margin-bottom: 12px; }
+
+    .terms ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .terms li {
+      margin-bottom: 12px;
+    }
+
     .term-link {
       display: inline-block;
       margin-top: 4px;
@@ -192,7 +225,12 @@
       transition: background 0.3s ease, color 0.3s ease;
       box-shadow: 0 0 4px #000a;
     }
-    .term-link:hover { background: #555; color: #fff; }
+
+    .term-link:hover {
+      background: #555;
+      color: #fff;
+    }
+
     .participants {
       margin-top: 50px;
       max-height: 280px;
@@ -201,13 +239,16 @@
       border-radius: 16px;
       padding: 18px 22px;
       font-size: 14px;
-      box-shadow: 0 0 25px #000000bb, inset 0 0 12px #222222aa;
+      box-shadow:
+        0 0 25px #000000bb,
+        inset 0 0 12px #222222aa;
       user-select: none;
       position: relative;
       z-index: 1;
       backdrop-filter: saturate(150%) blur(6px);
       border: 1px solid #333;
     }
+
     .participants h2 {
       margin-top: 0;
       margin-bottom: 18px;
@@ -215,13 +256,18 @@
       color: #eee;
       text-shadow: 0 0 4px #000000cc;
     }
+
     .participant {
       display: flex;
       align-items: center;
       padding: 10px 14px;
       border-bottom: 1px solid #222;
     }
-    .participant:last-child { border-bottom: none; }
+
+    .participant:last-child {
+      border-bottom: none;
+    }
+
     .avatar-initial {
       width: 32px;
       height: 32px;
@@ -238,26 +284,26 @@
       text-transform: uppercase;
       box-shadow: 0 0 4px #000000cc inset;
     }
-    .participants::-webkit-scrollbar { width: 7px; }
-    .participants::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 8px; }
-    .participants::-webkit-scrollbar-thumb { background: #555; border-radius: 8px; }
-    @media (max-width: 600px) {
-      .container { padding: 18px 6px; }
-      h1 { font-size: 2rem; }
-      .participants { padding: 10px 4px; }
+
+    .participants::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .participants::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+
+    .participants::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
-<div id="announcement" style="width:100%;max-width:600px;margin:0 auto 20px auto;padding:18px 20px;background:#292929cc;color:#fff;border-radius:14px;text-align:center;font-weight:700;box-shadow:0 0 12px #222222cc;backdrop-filter:blur(5px);border:1px solid #444;">
-  <span>Çekiliş 30 Haziran 2024 saat 23:59'da sona erecek! Kazananlar bu sayfada açıklanacaktır.</span>
-</div>
-
 <h1>20 KİŞİYE 1K ROBUX</h1>
 <p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
-
-<div id="countdown" style="font-size:1.3rem;font-weight:700;color:#ffeb3b;text-shadow:0 0 8px #000; margin-bottom:18px;text-align:center;"></div>
 
 <div class="container">
   <form id="raffleForm" autocomplete="off">
@@ -272,16 +318,7 @@
       maxlength="20"
       pattern="^[a-zA-Z0-9_]+$"
     />
-    <label for="email" style="margin-top:18px;">E-posta Adresiniz (isteğe bağlı):</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      placeholder="E-posta adresiniz (isteğe bağlı)"
-      maxlength="50"
-      style="margin-bottom:10px;"
-    />
-    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" style="margin:18px 0;"></div>
+
     <div class="terms">
       <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
       <ul>
@@ -291,28 +328,17 @@
         <li>⚠️ Her IP adresinden <strong>sadece 1 katılım</strong> yapılabilir.</li>
         <li>🎉 Toplamda <strong>20 kişi</strong> rastgele seçilecektir.</li>
       </ul>
-      <div style="margin-top:18px;font-size:13px;color:#ffb300;">
-        <strong>KVKK/GDPR:</strong> Katılım bilgileriniz sadece çekiliş için kullanılacak, üçüncü kişilerle paylaşılmayacaktır.
-      </div>
     </div>
+
     <button type="submit" id="submitBtn">Çekilişe Katıl</button>
     <div class="error" id="errorMsg" style="display:none;"></div>
     <div class="info" id="infoMsg"></div>
   </form>
+
   <div class="participants" id="participants">
-    <h2>Katılanlar <span id="participantCount" style="font-size:1rem;color:#ffeb3b;text-shadow:0 0 4px #000;"></span></h2>
+    <h2>Katılanlar</h2>
     <div id="participantList">Yükleniyor...</div>
   </div>
-  <div class="winners" id="winners" style="display:none;margin-top:30px;background:#232323cc;padding:18px 22px;border-radius:16px;box-shadow:0 0 18px #000000bb;">
-    <h2 style="color:#4CAF50;">Kazananlar</h2>
-    <div id="winnerList"></div>
-  </div>
-</div>
-
-<div id="shareBox" style="display:none;margin:30px auto 0 auto;max-width:480px;text-align:center;background:#232323cc;padding:18px 22px;border-radius:16px;box-shadow:0 0 18px #000000bb;">
-  <h3 style="color:#eee;">Şansını arkadaşlarınla paylaş!</h3>
-  <button onclick="window.open('https://twitter.com/intent/tweet?text=Ben%20Roblox%201K%20Robux%20çekilişine%20katıldım!%20Sen%20de%20katıl:%20https://seninsiten.com','_blank')" style="margin:8px 6px 0 0;">Twitter'da Paylaş</button>
-  <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https://seninsiten.com','_blank')" style="margin:8px 0 0 6px;">Facebook'ta Paylaş</button>
 </div>
 
 <script type="module">
@@ -335,71 +361,11 @@
 
   const raffleForm = document.getElementById('raffleForm');
   const usernameInput = document.getElementById('username');
-  const emailInput = document.getElementById('email');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
-  const participantCount = document.getElementById('participantCount');
-  const winnerDiv = document.getElementById('winners');
-  const winnerList = document.getElementById('winnerList');
-  const shareBox = document.getElementById('shareBox');
 
-  // Sayaç
-  const endDate = new Date("2024-06-30T23:59:59");
-  function updateCountdown() {
-    const now = new Date();
-    const diff = endDate - now;
-    const countdownDiv = document.getElementById('countdown');
-    if (diff <= 0) {
-      countdownDiv.textContent = "Çekiliş sona erdi!";
-      raffleForm.style.display = 'none';
-      showWinners();
-      return;
-    }
-    const days = Math.floor(diff / 1000 / 60 / 60 / 24);
-    const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
-    const mins = Math.floor((diff / 1000 / 60) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-    countdownDiv.textContent =
-      `Kalan süre: ${days} gün ${hours} saat ${mins} dk ${secs} sn`;
-  }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-
-  // Katılımcı listesi ve sayaç
-  function listenParticipants() {
-    const participantsRef = ref(database, 'participants');
-    onValue(participantsRef, (snapshot) => {
-      const data = snapshot.val();
-      participantList.innerHTML = '';
-      let count = 0;
-      if (!data) {
-        participantList.innerHTML = '<p>Henüz katılım yok.</p>';
-        participantCount.textContent = '(0)';
-        return;
-      }
-      const entries = Object.values(data);
-      count = entries.length;
-      participantCount.textContent = `(${count})`;
-      // Sıralı ve avatarlı liste
-      entries.sort((a, b) => a.username.localeCompare(b.username));
-      entries.forEach(({ username }, idx) => {
-        const div = document.createElement('div');
-        div.classList.add('participant');
-        const initial = document.createElement('div');
-        initial.classList.add('avatar-initial');
-        initial.textContent = username.charAt(0).toUpperCase();
-        const name = document.createElement('span');
-        name.textContent = `${idx + 1}. ${username}`;
-        div.appendChild(initial);
-        div.appendChild(name);
-        participantList.appendChild(div);
-      });
-    });
-  }
-
-  // IP kontrolü
   async function getUserIP() {
     try {
       const res = await fetch('https://api.ipify.org?format=json');
@@ -409,84 +375,71 @@
       return null;
     }
   }
+
+  function listenParticipants() {
+    const participantsRef = ref(database, 'participants');
+    onValue(participantsRef, (snapshot) => {
+      const data = snapshot.val();
+      participantList.innerHTML = '';
+      if (!data) {
+        participantList.innerHTML = '<p>Henüz katılım yok.</p>';
+        return;
+      }
+      const entries = Object.values(data);
+      entries.forEach(({ username }) => {
+        const div = document.createElement('div');
+        div.classList.add('participant');
+
+        const initial = document.createElement('div');
+        initial.classList.add('avatar-initial');
+        initial.textContent = username.charAt(0).toUpperCase();
+
+        const name = document.createElement('span');
+        name.textContent = username;
+
+        div.appendChild(initial);
+        div.appendChild(name);
+        participantList.appendChild(div);
+      });
+    });
+  }
+
   async function checkIPExists(ip) {
     const ipKey = ip.replace(/\./g, '-');
     const ipRef = ref(database, 'ips/' + ipKey);
     const snapshot = await get(ipRef);
     return snapshot.exists();
   }
+
   async function saveIP(ip) {
     const ipKey = ip.replace(/\./g, '-');
     const ipRef = ref(database, 'ips/' + ipKey);
     await set(ipRef, true);
   }
-  async function saveParticipant(username, ip, email) {
+
+  async function saveParticipant(username, ip) {
     const participantsRef = ref(database, 'participants');
     const newParticipantRef = push(participantsRef);
-    await set(newParticipantRef, { username, ip, email });
+    await set(newParticipantRef, { username, ip });
   }
 
-  // Kazananları seç ve göster
-  async function showWinners() {
-    const participantsRef = ref(database, 'participants');
-    const snapshot = await get(participantsRef);
-    if (!snapshot.exists()) {
-      winnerDiv.style.display = 'block';
-      winnerList.innerHTML = '<p>Katılımcı yok.</p>';
-      return;
-    }
-    const entries = Object.values(snapshot.val());
-    let winners = [];
-    if (entries.length <= 20) {
-      winners = entries;
-    } else {
-      // Rastgele 20 kişi seç
-      const shuffled = entries.sort(() => 0.5 - Math.random());
-      winners = shuffled.slice(0, 20);
-    }
-    winnerDiv.style.display = 'block';
-    winnerList.innerHTML = '';
-    winners.forEach((w, idx) => {
-      const div = document.createElement('div');
-      div.classList.add('participant');
-      const initial = document.createElement('div');
-      initial.classList.add('avatar-initial');
-      initial.textContent = w.username.charAt(0).toUpperCase();
-      const name = document.createElement('span');
-      name.textContent = `${idx + 1}. ${w.username}`;
-      div.appendChild(initial);
-      div.appendChild(name);
-      winnerList.appendChild(div);
-    });
-  }
-
-  // Form submit
   raffleForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorMsg.style.display = 'none';
     infoMsg.textContent = '';
-    infoMsg.style.animation = 'none';
+    infoMsg.style.animation = 'none'; // animasyon reset
+
     const username = usernameInput.value.trim();
-    const email = emailInput.value.trim();
-    // reCAPTCHA kontrolü
-    const recaptcha = window.grecaptcha && window.grecaptcha.getResponse();
-    if (!recaptcha) {
-      errorMsg.textContent = 'Lütfen robot olmadığınızı doğrulayın (reCAPTCHA).';
-      errorMsg.style.display = 'block';
-      return;
-    }
+
     if (!username.match(/^[a-zA-Z0-9_]{3,20}$/)) {
       errorMsg.textContent = 'Geçerli bir Roblox kullanıcı adı girin.';
       errorMsg.style.display = 'block';
       return;
     }
-    if (email && !/^\S+@\S+\.\S+$/.test(email)) {
-      errorMsg.textContent = 'Geçerli bir e-posta adresi girin veya boş bırakın.';
-      errorMsg.style.display = 'block';
-      return;
-    }
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Kontrol ediliyor...';
+
     const ip = await getUserIP();
     if (!ip) {
       errorMsg.textContent = 'IP adresiniz alınamadı.';
@@ -495,6 +448,7 @@
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
+
     const ipExists = await checkIPExists(ip);
     if (ipExists) {
       errorMsg.textContent = 'Bu IP adresiyle zaten katılım yapılmış.';
@@ -503,20 +457,22 @@
       submitBtn.textContent = 'Çekilişe Katıl';
       return;
     }
+
     try {
-      await saveParticipant(username, ip, email);
+      await saveParticipant(username, ip);
       await saveIP(ip);
-      infoMsg.textContent = `Başarıyla katıldınız, ${username}! Bol şans! 🎉`;
+
+      infoMsg.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
       infoMsg.style.animation = 'none';
-      void infoMsg.offsetWidth;
+      void infoMsg.offsetWidth; // animasyon reset için trigger
       infoMsg.style.animation = 'floatUp 2.5s ease forwards';
+
       raffleForm.reset();
-      shareBox.style.display = 'block';
-      window.grecaptcha.reset();
     } catch {
       errorMsg.textContent = 'Kayıt sırasında hata oluştu.';
       errorMsg.style.display = 'block';
     }
+
     submitBtn.disabled = false;
     submitBtn.textContent = 'Çekilişe Katıl';
   });
@@ -526,3 +482,5 @@
 
 </body>
 </html>
+
+
