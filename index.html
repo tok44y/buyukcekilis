@@ -465,15 +465,19 @@
   </div>
 </div>
 
-<div id="alreadyJoined" style="display:none; text-align:center; padding:40px 20px;">
-  <h2 style="color:#4CAF50;">Zaten katıldınız!</h2>
-  <div style="margin:18px 0 28px 0; font-size:1.2em; color:#fff;">
-    <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
-  </div>
-  <div style="margin-bottom:18px; color:#bbb;">Katılımcılar arasında adınızı görebilirsiniz.</div>
-  <div class="participants" id="participants">
-    <h2>Katılanlar</h2>
-    <div id="participantList">Yükleniyor...</div>
+<div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
+  <div style="max-width:480px;margin:60px auto 0 auto;background:#23232bde;border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+      <div style="font-size:2.1em;font-weight:900;color:#ffd700;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;">✔ ZATEN KATILDINIZ</div>
+      <div style="font-size:1.18em;color:#fff;">
+        <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
+      </div>
+      <div style="color:#bbb;font-size:1em;">Katılımcılar arasında adınızı vurgulu görebilirsiniz.</div>
+      <div class="participants" id="participants" style="margin-top:18px;">
+        <h2>Katılanlar</h2>
+        <div id="participantList">Yükleniyor...</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -576,10 +580,10 @@
     await set(ipRef, true);
   }
 
-  async function saveParticipant(username, ip, groupProof) {
+  async function saveParticipant(username, ip) {
     const participantsRef = ref(database, 'participants');
     const newParticipantRef = push(participantsRef);
-    await set(newParticipantRef, { username, ip, groupProof });
+    await set(newParticipantRef, { username, ip });
   }
 
   function showStep(stepNum) {
@@ -590,7 +594,7 @@
   }
 
   function checkAllTerms() {
-    return chkFollow.checked && chkLike.checked && groupProofBase64;
+    return chkFollow.checked && chkLike.checked && groupProof.value;
   }
   function updateSubmitBtn() {
     submitBtn.disabled = !checkAllTerms();
@@ -630,7 +634,7 @@
     step2Error.textContent = '';
     step2Success.textContent = '';
     if (!checkAllTerms()) {
-      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizi ve ekran görüntüsünü yüklediğinizden emin olun!';
+      step2Error.textContent = 'Lütfen tüm şartları yerine getirdiğinizden ve ekran görüntüsünü yüklediğinizden emin olun!';
       return;
     }
     submitBtn.disabled = true;
@@ -651,7 +655,7 @@
       return;
     }
     try {
-      await saveParticipant(currentUsername, ip, groupProofBase64);
+      await saveParticipant(currentUsername, ip);
       await saveIP(ip);
       step2Success.textContent = 'Başarıyla katıldınız! Bol şans! 🎉';
       raffleForm.reset();
@@ -662,7 +666,6 @@
         step2Success.textContent = '';
         submitBtn.disabled = true;
         submitBtn.textContent = 'Çekilişe Katıl';
-        // Katılım sonrası sayfayı yenile, kullanıcıya alreadyJoined ekranı gelsin
         window.location.reload();
       }, 2500);
     } catch {
@@ -672,35 +675,9 @@
     submitBtn.textContent = 'Çekilişe Katıl';
   });
 
-  function setTermsDisabled(disabled) {
-    chkFollow.disabled = disabled;
-    chkLike.disabled = disabled;
-    groupProof.disabled = disabled;
-    if (disabled) {
-      chkFollow.parentElement.style.opacity = 0.6;
-      chkLike.parentElement.style.opacity = 0.6;
-      groupProof.style.opacity = 0.6;
-    } else {
-      chkFollow.parentElement.style.opacity = 1;
-      chkLike.parentElement.style.opacity = 1;
-      groupProof.style.opacity = 1;
-    }
-  }
-  // Şartlar adımı açıldığında 5 saniye kilitli
-  function onStep2Open() {
-    setTermsDisabled(true);
-    setTimeout(() => {
-      setTermsDisabled(false);
-    }, 5000);
-  }
-  // step2 açıldığında tetikle
-  const origShowStep = showStep;
-  showStep = function(stepNum) {
-    origShowStep(stepNum);
-    if (stepNum === 2) onStep2Open();
-  }
-
-  // Tikler ilgili linke tıklamadan aktif olmasın, her biri bağımsız ve kendi süresiyle
+  // Tikler tamamen bağımsız, her biri sadece kendi linkine ve süresine bağlı
+  let followTimer = null;
+  let likeTimer = null;
   function startCountdown(type) {
     let seconds = type === 'follow' ? 7 : 25;
     const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
@@ -708,23 +685,25 @@
     const wrap = type === 'follow' ? followWrap : likeWrap;
     if (type === 'follow') {
       if (followTimer) clearInterval(followTimer);
+      chkFollow.disabled = true;
+      followCountdown.textContent = 'Yükleniyor...';
+      followWrap.style.opacity = 0.6;
+      followTimer = setTimeout(() => {
+        chkFollow.disabled = false;
+        followCountdown.textContent = '';
+        followWrap.style.opacity = 1;
+      }, seconds * 1000);
     } else {
       if (likeTimer) clearInterval(likeTimer);
+      chkLike.disabled = true;
+      likeCountdown.textContent = 'Yükleniyor...';
+      likeWrap.style.opacity = 0.6;
+      likeTimer = setTimeout(() => {
+        chkLike.disabled = false;
+        likeCountdown.textContent = '';
+        likeWrap.style.opacity = 1;
+      }, seconds * 1000);
     }
-    chk.disabled = true;
-    wrap.style.opacity = 0.6;
-    countdownSpan.textContent = 'Yükleniyor...';
-    let timer = setInterval(() => {
-      seconds--;
-      if (seconds <= 0) {
-        clearInterval(timer);
-        chk.disabled = false;
-        wrap.style.opacity = 1;
-        countdownSpan.textContent = '';
-      }
-    }, 1000);
-    if (type === 'follow') followTimer = timer;
-    else likeTimer = timer;
   }
   profileLink.addEventListener('click', () => {
     startCountdown('follow');
@@ -735,6 +714,8 @@
   // Başlangıçta tikler pasif ve opaklığı düşük olsun
   followWrap.style.opacity = 0.6;
   likeWrap.style.opacity = 0.6;
+  chkFollow.disabled = true;
+  chkLike.disabled = true;
 
   // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
   window.addEventListener('DOMContentLoaded', async () => {
