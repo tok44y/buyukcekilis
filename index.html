@@ -416,7 +416,7 @@
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
         <ul style="padding-left:0; list-style:none;">
           <li>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+            <div id="followWrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
               <span><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
               <div style="display:flex;align-items:center;gap:6px;">
                 <span id="followCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
@@ -425,7 +425,7 @@
             </div>
           </li>
           <li>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+            <div id="likeWrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
               <span><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
               <div style="display:flex;align-items:center;gap:6px;">
                 <span id="likeCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
@@ -500,6 +500,8 @@
   const gameLink = document.getElementById('gameLink');
   const followCountdown = document.getElementById('followCountdown');
   const likeCountdown = document.getElementById('likeCountdown');
+  const followWrap = document.getElementById('followWrap');
+  const likeWrap = document.getElementById('likeWrap');
   let currentUsername = '';
   let groupProofBase64 = '';
 
@@ -687,12 +689,14 @@
     let seconds = type === 'follow' ? 7 : 25;
     const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
     const chk = type === 'follow' ? chkFollow : chkLike;
+    const wrap = type === 'follow' ? followWrap : likeWrap;
     if (type === 'follow') {
       if (followTimer) clearInterval(followTimer);
     } else {
       if (likeTimer) clearInterval(likeTimer);
     }
     chk.disabled = true;
+    wrap.style.opacity = 0.6;
     countdownSpan.textContent = seconds + ' sn';
     let timer = setInterval(() => {
       seconds--;
@@ -700,6 +704,7 @@
       if (seconds <= 0) {
         clearInterval(timer);
         chk.disabled = false;
+        wrap.style.opacity = 1;
         countdownSpan.textContent = '';
       }
     }, 1000);
@@ -708,21 +713,13 @@
   }
   profileLink.addEventListener('click', () => {
     startCountdown('follow');
-    chkFollow.parentElement.style.opacity = 0.6;
-    setTimeout(() => {
-      chkFollow.parentElement.style.opacity = 1;
-    }, 7000);
   });
   gameLink.addEventListener('click', () => {
     startCountdown('like');
-    chkLike.parentElement.style.opacity = 0.6;
-    setTimeout(() => {
-      chkLike.parentElement.style.opacity = 1;
-    }, 25000);
   });
   // Başlangıçta tikler pasif ve opaklığı düşük olsun
-  chkFollow.parentElement.style.opacity = 0.6;
-  chkLike.parentElement.style.opacity = 0.6;
+  followWrap.style.opacity = 0.6;
+  likeWrap.style.opacity = 0.6;
 
   listenParticipants();
 </script>
