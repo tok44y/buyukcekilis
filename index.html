@@ -564,19 +564,16 @@
 </head>
 <body>
 
-<div class="raffle-panel-full">
-  <div class="raffle-announcement-panel-full">
-    <strong>Çekiliş 30 Haziran 2024 saat 23:59'da sona erecek! Kazananlar bu sayfada açıklanacaktır.</strong>
-    <div id="joinedPanel" style="display:none;">
-      <div class="joined-anim-full">
-        <div style="font-size:1.18em;color:#fff;margin-bottom:10px;">
-          <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
-        </div>
-        <div style="color:#43e97b;font-size:1.15em;font-weight:800;text-shadow:0 0 8px #43e97b88,0 0 16px #000a;letter-spacing:1px;">Başarıyla katıldınız!</div>
-        <div class="participants participants-full" id="participants">
-          <h2>Katılanlar</h2>
-          <div id="participantList">Yükleniyor...</div>
-        </div>
+<div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
+  <div class="joined-anim" style="max-width:480px;margin:60px auto 0 auto;background:#18191bcc;border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;animation: joinedFadeIn 1.1s cubic-bezier(.4,1.4,.6,1);">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+      <div style="font-size:1.18em;color:#fff;">
+        <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
+      </div>
+      <div style="color:#43e97b;font-size:1.15em;font-weight:800;text-shadow:0 0 8px #43e97b88,0 0 16px #000a;letter-spacing:1px;">Başarıyla katıldınız!</div>
+      <div class="participants" id="participants" style="margin-top:18px;">
+        <h2>Katılanlar</h2>
+        <div id="participantList">Yükleniyor...</div>
       </div>
     </div>
   </div>
@@ -867,8 +864,7 @@
         groupProofBase64 = '';
         groupProofPreview.innerHTML = '';
         mainContainer.style.display = 'none';
-        document.querySelector('.raffle-panel-full').style.display = 'block';
-        document.getElementById('joinedPanel').style.display = 'block';
+        document.getElementById('alreadyJoined').style.display = 'block';
         // Sayfanın geri kalanını gizle
         document.body.querySelectorAll('body > *:not(.raffle-panel-full):not(#successModal)').forEach(el => el.style.display = 'none');
         listenParticipants(currentUsername);
