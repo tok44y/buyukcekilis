@@ -503,11 +503,13 @@
   </form>
 
   <div id="alreadyJoined" style="display:none; text-align:center; padding:0;">
-    <div class="joined-anim" style="max-width:520px;margin:60px auto 0 auto;background:linear-gradient(135deg,#23232b 80%,#ffd70022 100%);border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;animation: joinedFadeIn 1.1s cubic-bezier(.4,1.4,.6,1);">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
-        <div id="joinedUsernameBig" style="font-size:2.2em;font-weight:900;color:#ffd700;text-shadow:0 0 12px #000b,0 0 24px #ffd70055;letter-spacing:2px;margin-bottom:8px;"></div>
-        <div style="color:#fff;font-size:1.2em;font-weight:700;margin-bottom:8px;">ÇEKİLİŞE BAŞARIYLA KATILDINIZ</div>
-        <div class="participants" id="participants" style="margin-top:18px;width:100%;max-width:420px;">
+    <div class="joined-anim" style="max-width:480px;margin:60px auto 0 auto;background:#18191bcc;border-radius:20px;box-shadow:0 0 32px #000a,0 2px 8px #0002;backdrop-filter:blur(8px) saturate(140%);padding:44px 32px 36px 32px;animation: joinedFadeIn 1.1s cubic-bezier(.4,1.4,.6,1);">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+        <div style="font-size:1.18em;color:#fff;">
+          <strong>Kullanıcı adınız:</strong> <span id="joinedUsername" style="color:#ffd700; font-weight:800;"></span>
+        </div>
+        <div style="color:#43e97b;font-size:1.15em;font-weight:800;text-shadow:0 0 8px #43e97b88,0 0 16px #000a;letter-spacing:1px;">Başarıyla katıldınız!</div>
+        <div class="participants" id="participants" style="margin-top:18px;">
           <h2>Katılanlar</h2>
           <div id="participantList">Yükleniyor...</div>
         </div>
@@ -589,18 +591,10 @@
         participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
         return;
       }
-      let entries = Object.values(data);
+      const entries = Object.values(data);
       if (entries.length === 0) {
         participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
         return;
-      }
-      // Kendi nickini en üste al
-      if (myUsername) {
-        const idx = entries.findIndex(e => e.username && e.username.toLowerCase() === myUsername.toLowerCase());
-        if (idx > -1) {
-          const me = entries.splice(idx, 1)[0];
-          entries = [me, ...entries];
-        }
       }
       entries.forEach(({ username }) => {
         const div = document.createElement('div');
@@ -617,9 +611,9 @@
         div.appendChild(name);
         participantList.appendChild(div);
       });
-      // alreadyJoined ekranında kendi nickini büyük göster
-      if (myUsername && document.getElementById('joinedUsernameBig')) {
-        document.getElementById('joinedUsernameBig').textContent = myUsername;
+      // alreadyJoined ekranında kendi nickini küçük göster
+      if (myUsername && document.getElementById('joinedUsername')) {
+        document.getElementById('joinedUsername').textContent = myUsername;
       }
     });
   }
