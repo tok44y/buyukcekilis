@@ -655,34 +655,20 @@
     <div id="step2" class="step">
       <div class="terms">
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
-        <ul style="padding-left:0; list-style:none;">
-          <li>
-            <div id="likeWrap" class="like-wrap">
-              <span class="term-main-text"><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <span id="likeCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
-                <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
-              </div>
-            </div>
-          </li>
-          <li style="margin-top:10px;">
-            
-          </li>
-          <li>
-         
-          </li>
-        </ul>
-        <div style="margin:18px 0 10px 0;">
-          <strong>Grup Linki </strong>
-          <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a>
+        <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
+          <a class="term-link special-hover" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Roblox Oyunu (Beğen & Favorile)</a>
+          <a class="term-link special-hover" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Marks Blade Grubu</a>
         </div>
-        <div style="height:10px;"></div>
-        <div style="margin-top:18px;">
-          <label for="groupProof"><strong>Gruba katıldığını gösteren ekran görüntüsünü yükle:</strong></label>
-          <input type="file" id="groupProof" accept="image/*" style="margin-top:8px;" />
+        <div class="like-wrap" style="justify-content:center;gap:10px;margin-bottom:18px;">
+          <span class="term-main-text" style="font-size:1em;">Oyunu beğenip favorilere ekledim</span>
+          <span id="likeCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
+          <input type="checkbox" id="chkLike" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
+        </div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;align-items:center;">
+          <label for="groupProof" style="width:100%;text-align:left;"><strong>Gruba katıldığını gösteren ekran görüntüsünü yükle:</strong></label>
+          <input type="file" id="groupProof" accept="image/*" style="margin-top:8px;max-width:320px;" />
           <div id="groupProofPreview" style="margin-top:10px;"></div>
         </div>
-        <!-- Şartlar maddeleri (• ile başlayanlar) -->
         <ul style="padding-left:0; list-style:none; margin-top:18px;">
           <li>
             <span><strong>•</strong> <strong>Her IP adresinden sadece 1 katılım yapılabilir.</strong></span>
