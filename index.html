@@ -597,32 +597,15 @@
 <h1>20 KİŞİYE 1K ROBUX</h1>
 <p class="lead">Toplam 20 şanslı katılımcı 1000 Robux kazanacak! Şimdi katıl, şansını göster! 🚀</p>
 
-<!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ) -->
-<div id="joinedSuccess" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:480px; margin:60px auto 0 auto; position:relative;">
-  <!-- Konfeti Efekti -->
-  <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:10000;display:none;"></canvas>
-  <div class="success-box" style="background:rgba(24,25,27,0.92) url('https://i.imgur.com/NRVp9DX.png') center center/cover; border-radius:16px; box-shadow:0 0 24px #000a,0 2px 8px #0002; padding:32px 24px 24px 24px; width:100%; text-align:center; margin-bottom:22px; position:relative;">
-    <div style="font-size:2.5em; color:#ffe066; font-weight:900; margin-bottom:18px; text-shadow:0 0 16px #000,0 0 8px #ffe066; letter-spacing:1.5px;">🎉 Başarıyla Katıldın! 🎉</div>
-    <div style="color:#b0b0b0; font-size:1.1em; font-weight:700; margin-bottom:18px;">Kullanıcı adınız: <span id="joinedUsername" style="color:#fff; font-weight:800;"></span></div>
-    <div style="color:#4CAF50; font-size:1.25em; font-weight:900; margin-bottom:18px; text-shadow:0 0 8px #4CAF50cc;">Bol şans! Kazananlar 30 Haziran'da açıklanacak!</div>
-    <div style="color:#e0e0e0; font-size:1.2em; font-weight:800; margin-bottom:12px;">Katılanlar</div>
-    <div class="participants" id="participants" style="margin-top:0; background:rgba(24,25,27,0.85); border-radius:14px; box-shadow:0 0 18px #000a, 0 2px 8px #0002; border: 1px solid #333; color:#f5f5f5; padding:18px 18px; max-width:420px; width:100%; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
-      <div id="participantList" style="width:100%;"></div>
-    </div>
-    <button onclick="window.location.reload()" style="margin-top:28px; padding:12px 32px; font-size:1.1em; font-weight:800; border-radius:12px; background:linear-gradient(90deg,#4CAF50,#8BC34A); color:#fff; border:none; box-shadow:0 0 12px #4CAF50aa; cursor:pointer;">Ana Sayfaya Dön</button>
-  </div>
-</div>
-
 <!-- TEKRAR GELENLER İÇİN BAŞARI KUTUSU (ŞARTLAR TEMA) -->
 <div id="alreadyJoinedBox" style="display:none; width:100%; max-width:520px; margin:60px auto 0 auto;">
   <div class="terms" style="margin-top:0; position:relative; box-shadow:0 0 18px #000a,0 2px 8px #0002;">
     <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:10px;text-align:center;">Tekrar Hoşgeldiniz, <span id="alreadyJoinedUsername" style="color:#fff;">kullanıcı</span>!</div>
     <div style="font-size:1.25em;font-weight:900;color:#ff4d4d;text-shadow:0 0 8px #000,0 0 8px #ff4d4d;margin-bottom:18px;text-align:center;">Çekiliş 30 Haziran 2024 tarihinde bu sayfada açıklanacaktır</div>
-    <!-- Şartlar butonları (küçük ve yan yana) -->
-    <div style="font-size:0.93em;color:#fff;text-align:center;margin-bottom:6px;opacity:1;">Şartları yerine getirmediyseniz buradan ulaşabilirsiniz</div>
+    <div style="font-size:0.93em;color:#fff;text-align:center;margin-bottom:6px;opacity:1;font-family:'Montserrat',sans-serif;font-weight:700;">Şartları yerine getirmediyseniz buradan ulaşabilirsiniz</div>
     <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin:0 auto 18px auto;max-width:420px;">
-      <a href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" class="term-link" style="flex:1;text-align:center;padding:10px 0;font-size:0.95em;font-weight:700;background:#444;color:#fff;border-radius:10px;box-shadow:0 0 4px #000a;border:1px solid #444;transition:background 0.3s;min-width:0;">Roblox Oyunu</a>
-      <a href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" class="term-link" style="flex:1;text-align:center;padding:10px 0;font-size:0.95em;font-weight:700;background:#444;color:#fff;border-radius:10px;box-shadow:0 0 4px #000a;border:1px solid #444;transition:background 0.3s;min-width:0;">Grup</a>
+      <a class="term-link special-hover" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Roblox Oyunu (Beğen & Favorile)</a>
+      <a class="term-link special-hover" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Marks Blade Grubu</a>
     </div>
     <div style="color:#e0e0e0;font-size:1.2em;font-weight:800;margin-bottom:10px;text-align:center;">Katılanlar</div>
     <div class="participants" id="alreadyJoinedParticipants" style="margin:0 auto 0 auto;background:#292929cc;border-radius:14px;box-shadow:0 0 18px #222222cc;border:1px solid #444;color:#fff;padding:18px 18px;max-width:420px;width:100%;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;align-items:flex-start;">
@@ -687,6 +670,8 @@
     </div>
   </form>
 </div>
+
+<canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:10000;display:none;"></canvas>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
@@ -929,11 +914,9 @@
       groupProofBase64 = '';
       groupProofPreview.innerHTML = '';
       mainContainer.style.display = 'none';
-      document.getElementById('joinedSuccess').style.display = 'flex';
-      listenParticipants(currentUsername);
-      step2Success.textContent = '';
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Çekilişe Katıl';
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch {
       step2Error.textContent = 'Kayıt sırasında hata oluştu.';
     }
@@ -989,7 +972,6 @@
   // Katılımcı tekrar gelirse bu kutuyu göster
   function showAlreadyJoinedBox(myUsername) {
     document.getElementById('mainContainer').style.display = 'none';
-    document.getElementById('joinedSuccess').style.display = 'none';
     document.getElementById('alreadyJoinedBox').style.display = 'block';
     document.getElementById('alreadyJoinedUsername').textContent = myUsername;
     listenAlreadyJoinedParticipants(myUsername);
@@ -1069,7 +1051,6 @@
       showAlreadyJoinedBox(myUsername);
     } else {
       document.getElementById('mainContainer').style.display = 'block';
-      document.getElementById('joinedSuccess').style.display = 'none';
       document.getElementById('alreadyJoinedBox').style.display = 'none';
       listenParticipants();
     }
