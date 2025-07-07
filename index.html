@@ -592,11 +592,28 @@
 <!-- BAŞARI KUTUSU + KATILIMCILAR (YENİ) -->
 <div id="joinedSuccess" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:480px; margin:60px auto 0 auto;">
   <div class="success-box" style="background:rgba(24,25,27,0.92) url('https://i.imgur.com/NRVp9DX.png') center center/cover; border-radius:16px; box-shadow:0 0 24px #000a,0 2px 8px #0002; padding:32px 24px 24px 24px; width:100%; text-align:center; margin-bottom:22px;">
-    <div style="font-size:2em; color:#fff; font-weight:900; margin-bottom:18px;">Başarıyla Katıldın</div>
-    <div style="color:#b0b0b0; font-size:1.1em; font-weight:700; margin-bottom:18px;">Kullanıcı adınız: <span id="joinedUsername" style="color:#fff; font-weight:800;"></span></div>
-    <div style="color:#e0e0e0; font-size:1.2em; font-weight:800; margin-bottom:12px;">Katılanlar</div>
+    <div style="font-size:2em; color:#fff; font-weight:900; margin-bottom:18px;">
+      <span id="personalWelcome">Hoş geldin!</span>
+    </div>
+    <div style="color:#b0b0b0; font-size:1.1em; font-weight:700; margin-bottom:10px;">
+      <span id="joinedInfo">Çekilişe zaten katıldınız.</span>
+    </div>
+    <div style="color:#e0e0e0; font-size:1.1em; font-weight:700; margin-bottom:10px;">
+      <span id="raffleInfo">Çekiliş sonuçları 1 Temmuz 2024 tarihinde bu sayfada açıklanacaktır.</span>
+    </div>
+    <div style="color:#e0e0e0; font-size:1.2em; font-weight:800; margin-bottom:12px;">
+      Katılanlar (<span id="participantCount">0</span>)
+    </div>
+    <div id="countdownBox" style="margin-bottom:12px; color:#4CAF50; font-weight:800; font-size:1.1em;">
+      Çekilişin bitmesine kalan süre: <span id="joinedCountdownTimer"></span>
+    </div>
     <div class="participants" id="participants" style="margin-top:0; background:rgba(24,25,27,0.85); border-radius:14px; box-shadow:0 0 18px #000a, 0 2px 8px #0002; border: 1px solid #333; color:#f5f5f5; padding:18px 18px; max-width:420px; width:100%;">
       <div id="participantList">Yükleniyor...</div>
+    </div>
+    <div style="margin-top:18px; display:flex; justify-content:center; gap:12px;">
+      <button id="shareWhatsapp" class="share-btn" style="background:linear-gradient(90deg,#25d366,#128c7e);color:#fff;">WhatsApp'ta Paylaş</button>
+      <button id="shareTwitter" class="share-btn" style="background:linear-gradient(90deg,#1da1f2,#0a85d9);color:#fff;">Twitter'da Paylaş</button>
+      <button id="shareDiscord" class="share-btn" style="background:linear-gradient(90deg,#7289da,#5865f2);color:#fff;">Discord'da Paylaş</button>
     </div>
   </div>
 </div>
@@ -614,9 +631,10 @@
         minlength="3"
         maxlength="20"
         pattern="^[a-zA-Z0-9_]+$"
+        style="background:#23232b; color:#e0e0e0; border:2px solid #444; border-radius:14px; font-size:18px; padding:16px 20px; box-shadow:0 0 8px #0002; margin-bottom:10px;"
       />
-      <button type="button" id="nextBtn" class="step-btn">Devam Et</button>
-      <div style="margin-top:16px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.05em; text-shadow:0 0 6px #0002;">
+      <button type="button" id="nextBtn" class="step-btn" style="background:linear-gradient(90deg,#bbb,#eee);color:#23232b; font-weight:800; border-radius:16px; box-shadow:0 0 20px #ffffffcc, inset 0 0 6px #999;">Devam Et</button>
+      <div style="margin-top:16px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.05em; text-shadow:0 0 6px #0002; background:#23232b; border-radius:10px; padding:8px 0;">
         <strong>•</strong> Kullanıcı adınızı <strong>doğru</strong> giriniz. Şartlar ve katılım bilgileriniz <strong>kontrol edilecektir!</strong>
       </div>
       <div class="step-error" id="step1Error"></div>
@@ -732,11 +750,15 @@
     onValue(participantsRef, (snapshot) => {
       const data = snapshot.val();
       participantList.innerHTML = '';
+      let count = 0;
       if (!data) {
         participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
+        document.getElementById('participantCount').textContent = '0';
         return;
       }
       const entries = Object.values(data);
+      count = entries.length;
+      document.getElementById('participantCount').textContent = count;
       if (entries.length === 0) {
         participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
         return;
@@ -756,9 +778,9 @@
         div.appendChild(name);
         participantList.appendChild(div);
       });
-      // alreadyJoined ekranında kendi nickini küçük göster
       if (myUsername && document.getElementById('joinedUsername')) {
         document.getElementById('joinedUsername').textContent = myUsername;
+        document.getElementById('personalWelcome').textContent = `Hoş geldin, ${myUsername}!`;
       }
     });
   }
@@ -929,6 +951,25 @@
     setInterval(update, 1000);
   }
 
+  // Katılım sonrası geri sayım (joinedSuccess için)
+  function startJoinedCountdownTimer() {
+    const target = new Date('2024-06-30T23:59:00+03:00');
+    function update() {
+      const now = new Date();
+      let diff = Math.max(0, target - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const mins = Math.floor(diff / (1000 * 60));
+      diff -= mins * (1000 * 60);
+      const secs = Math.floor(diff / 1000);
+      document.getElementById('joinedCountdownTimer').textContent = `${days}g ${hours}s ${mins}dk ${secs}sn`;
+    }
+    update();
+    setInterval(update, 1000);
+  }
+
   // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
   window.addEventListener('DOMContentLoaded', async () => {
     const ip = await getUserIP();
@@ -949,11 +990,29 @@
       document.getElementById('joinedSuccess').style.display = 'flex';
       document.getElementById('joinedUsername').textContent = myUsername;
       listenParticipants(myUsername);
+      startJoinedCountdownTimer();
     } else {
       mainContainer.style.display = 'block';
       document.getElementById('joinedSuccess').style.display = 'none';
       listenParticipants();
     }
+    // Paylaşım butonları
+    document.getElementById('shareWhatsapp').onclick = function() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Ben 1K Robux çekilişine katıldım! Sen de katıl: ');
+      window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+    };
+    document.getElementById('shareTwitter').onclick = function() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Ben 1K Robux çekilişine katıldım! Sen de katıl: ');
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    };
+    document.getElementById('shareDiscord').onclick = function() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Ben 1K Robux çekilişine katıldım! Sen de katıl: ' + url);
+      navigator.clipboard.writeText(text);
+      alert('Discord için metin panoya kopyalandı!');
+    };
   });
 </script>
 
