@@ -679,7 +679,7 @@
         </ul>
       </div>
       <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
-      <div id="submitInfo" style="margin-top:14px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
+      <div id="submitInfo" style="margin-top:28px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
         <strong>•</strong> Şartlar yerine getirilmeden buton aktif olmayacaktır.
       </div>
       <div class="step-error" id="step2Error"></div>
@@ -723,7 +723,7 @@
   const groupProofPreview = document.getElementById('groupProofPreview');
   const gameLink = document.getElementById('gameLink');
   const likeCountdown = document.getElementById('likeCountdown');
-  const likeWrap = document.getElementById('likeWrap');
+  const likeWrap = document.querySelector('.like-wrap');
   const mainContainer = document.getElementById('mainContainer');
   const alreadyJoined = document.getElementById('alreadyJoined');
   const joinedUsername = document.getElementById('joinedUsername');
@@ -944,19 +944,19 @@
   // Tikler tamamen bağımsız, her biri sadece kendi linkine ve süresine bağlı
   let likeTimer = null;
   function startCountdown(type) {
-    let seconds = type === 'like' ? 25 : 25;
-    const countdownSpan = type === 'like' ? likeCountdown : likeCountdown;
-    const chk = type === 'like' ? chkLike : chkLike;
-    const wrap = type === 'like' ? likeWrap : likeWrap;
+    let seconds = 7;
+    const countdownSpan = likeCountdown;
+    const chk = chkLike;
+    const wrap = likeWrap;
     if (type === 'like') {
-      if (likeTimer) clearInterval(likeTimer);
-      chkLike.disabled = true;
-      likeCountdown.textContent = 'Yükleniyor...';
-      likeWrap.style.opacity = 0.6;
+      if (likeTimer) clearTimeout(likeTimer);
+      chk.disabled = true;
+      countdownSpan.textContent = 'Yükleniyor...';
+      wrap.style.opacity = 0.6;
       likeTimer = setTimeout(() => {
-        chkLike.disabled = false;
-        likeCountdown.textContent = '';
-        likeWrap.style.opacity = 1;
+        chk.disabled = false;
+        countdownSpan.textContent = '';
+        wrap.style.opacity = 1;
       }, seconds * 1000);
     }
   }
