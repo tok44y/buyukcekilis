@@ -34,7 +34,7 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWlra2R3eDZ2NWM2d2R4OTI5aDZkZWQzd2JpNzZ6NDhqdmV5NWp4NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RlwF2vFb4y7bDnWvcO/giphy.gif') no-repeat center center/cover;
+      background: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ25scWt1Znk0MWJuZnhkZ3I5eWhkcXMxZjdvN2dhbnFrdW9ncmQyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UQg0PGmfa5H0bIA2Ka/giphy.gif') no-repeat center center/cover;
       z-index: -2;
       filter: brightness(1) saturate(1.2);
       will-change: transform;
@@ -619,9 +619,8 @@
     <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:10px;text-align:center;">Tekrar Hoşgeldiniz, <span id="alreadyJoinedUsername" style="color:#fff;">kullanıcı</span>!</div>
     <div style="font-size:1.25em;font-weight:900;color:#ff4d4d;text-shadow:0 0 8px #000,0 0 8px #ff4d4d;margin-bottom:18px;text-align:center;">Çekiliş 30 Haziran 2024 tarihinde bu sayfada açıklanacaktır</div>
     <!-- Şartlar butonları (küçük ve yan yana) -->
-    <div style="font-size:0.93em;color:#fff;text-align:center;margin-bottom:6px;opacity:1;"><strong>Şartları yerine getirmediyseniz buradan ulaşabilirsiniz</div>
+    <div style="font-size:0.93em;color:#fff;text-align:center;margin-bottom:6px;opacity:1;">Şartları yerine getirmediyseniz buradan ulaşabilirsiniz</div>
     <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin:0 auto 18px auto;max-width:420px;">
-      <a href="https://www.roblox.com/users/1665776490/profile" target="_blank" class="term-link" style="flex:1;text-align:center;padding:10px 0;font-size:0.95em;font-weight:700;background:#444;color:#fff;border-radius:10px;box-shadow:0 0 4px #000a;border:1px solid #444;transition:background 0.3s;min-width:0;">Roblox Profilim</a>
       <a href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" class="term-link" style="flex:1;text-align:center;padding:10px 0;font-size:0.95em;font-weight:700;background:#444;color:#fff;border-radius:10px;box-shadow:0 0 4px #000a;border:1px solid #444;transition:background 0.3s;min-width:0;">Roblox Oyunu</a>
       <a href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" class="term-link" style="flex:1;text-align:center;padding:10px 0;font-size:0.95em;font-weight:700;background:#444;color:#fff;border-radius:10px;box-shadow:0 0 4px #000a;border:1px solid #444;transition:background 0.3s;min-width:0;">Grup</a>
     </div>
@@ -656,15 +655,6 @@
       <div class="terms">
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
         <ul style="padding-left:0; list-style:none;">
-          <li>
-            <div id="followWrap" class="follow-wrap">
-              <span class="term-main-text"><strong>Beni takip et</strong> <a class="term-link" id="profileLink" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <span id="followCountdown" style="font-size:13px;color:#aaa;min-width:28px;"></span>
-                <input type="checkbox" id="chkFollow" style="accent-color:#888; width:18px; height:18px; margin-left:8px;" disabled />
-              </div>
-            </div>
-          </li>
           <li>
             <div id="likeWrap" class="like-wrap">
               <span class="term-main-text"><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
@@ -725,7 +715,6 @@
   const errorMsg = document.getElementById('errorMsg');
   const infoMsg = document.getElementById('infoMsg');
   const participantList = document.getElementById('participantList');
-  const chkFollow = document.getElementById('chkFollow');
   const chkLike = document.getElementById('chkLike');
   const step1 = document.getElementById('step1');
   const step2 = document.getElementById('step2');
@@ -735,11 +724,8 @@
   const step2Success = document.getElementById('step2Success');
   const groupProof = document.getElementById('groupProof');
   const groupProofPreview = document.getElementById('groupProofPreview');
-  const profileLink = document.getElementById('profileLink');
   const gameLink = document.getElementById('gameLink');
-  const followCountdown = document.getElementById('followCountdown');
   const likeCountdown = document.getElementById('likeCountdown');
-  const followWrap = document.getElementById('followWrap');
   const likeWrap = document.getElementById('likeWrap');
   const mainContainer = document.getElementById('mainContainer');
   const alreadyJoined = document.getElementById('alreadyJoined');
@@ -881,12 +867,11 @@
   }
 
   function checkAllTerms() {
-    return chkFollow.checked && chkLike.checked && groupProof.value;
+    return chkLike.checked && groupProof.value;
   }
   function updateSubmitBtn() {
     submitBtn.disabled = !checkAllTerms();
   }
-  chkFollow.addEventListener('change', updateSubmitBtn);
   chkLike.addEventListener('change', updateSubmitBtn);
   groupProof.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -960,24 +945,13 @@
   });
 
   // Tikler tamamen bağımsız, her biri sadece kendi linkine ve süresine bağlı
-  let followTimer = null;
   let likeTimer = null;
   function startCountdown(type) {
-    let seconds = type === 'follow' ? 7 : 25;
-    const countdownSpan = type === 'follow' ? followCountdown : likeCountdown;
-    const chk = type === 'follow' ? chkFollow : chkLike;
-    const wrap = type === 'follow' ? followWrap : likeWrap;
-    if (type === 'follow') {
-      if (followTimer) clearInterval(followTimer);
-      chkFollow.disabled = true;
-      followCountdown.textContent = 'Yükleniyor...';
-      followWrap.style.opacity = 0.6;
-      followTimer = setTimeout(() => {
-        chkFollow.disabled = false;
-        followCountdown.textContent = '';
-        followWrap.style.opacity = 1;
-      }, seconds * 1000);
-    } else {
+    let seconds = type === 'like' ? 25 : 25;
+    const countdownSpan = type === 'like' ? likeCountdown : likeCountdown;
+    const chk = type === 'like' ? chkLike : chkLike;
+    const wrap = type === 'like' ? likeWrap : likeWrap;
+    if (type === 'like') {
       if (likeTimer) clearInterval(likeTimer);
       chkLike.disabled = true;
       likeCountdown.textContent = 'Yükleniyor...';
@@ -989,16 +963,11 @@
       }, seconds * 1000);
     }
   }
-  profileLink.addEventListener('click', () => {
-    startCountdown('follow');
-  });
   gameLink.addEventListener('click', () => {
     startCountdown('like');
   });
   // Başlangıçta tikler pasif ve opaklığı düşük olsun
-  followWrap.style.opacity = 0.6;
   likeWrap.style.opacity = 0.6;
-  chkFollow.disabled = true;
   chkLike.disabled = true;
 
   // Geri sayım fonksiyonu (örnek: 30 Haziran 2024 23:59)
