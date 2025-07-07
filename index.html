@@ -590,6 +590,17 @@
       border: 1px solid #fff;
       transition: background 0.4s, box-shadow 0.4s, color 0.4s;
     }
+
+    /* Buton boyutunu küçültüyorum */
+    .term-link.special-hover {
+      flex: 1 1 120px;
+      text-align: center;
+      padding: 8px 0;
+      font-size: 0.97em;
+      font-weight: 700;
+      min-width: 90px;
+      max-width: 180px;
+    }
   </style>
 </head>
 <body>
@@ -838,7 +849,10 @@
     const participantsRef = ref(database, 'participants');
     const newParticipantRef = push(participantsRef);
     await set(newParticipantRef, { username, ip });
-    setTimeout(launchConfetti, 400);
+    setTimeout(() => {
+      showConfettiSuccess();
+      launchConfetti();
+    }, 400);
   }
 
   function showStep(stepNum) {
@@ -915,8 +929,9 @@
       groupProofPreview.innerHTML = '';
       mainContainer.style.display = 'none';
       setTimeout(() => {
+        hideConfettiSuccess();
         window.location.reload();
-      }, 2000);
+      }, 2500);
     } catch {
       step2Error.textContent = 'Kayıt sırasında hata oluştu.';
     }
@@ -927,7 +942,7 @@
   // Tikler tamamen bağımsız, her biri sadece kendi linkine ve süresine bağlı
   let likeTimer = null;
   function startCountdown(type) {
-    let seconds = 7;
+    let seconds = 25;
     const countdownSpan = likeCountdown;
     const chk = chkLike;
     const wrap = likeWrap;
@@ -1079,6 +1094,37 @@
       };
     }
   });
+
+  // Konfetiyle birlikte başarı yazısı
+  function showConfettiSuccess() {
+    let el = document.getElementById('confettiSuccessText');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'confettiSuccessText';
+      el.style.position = 'fixed';
+      el.style.top = '50%';
+      el.style.left = '50%';
+      el.style.transform = 'translate(-50%, -50%)';
+      el.style.zIndex = '10001';
+      el.style.fontFamily = "'Montserrat', sans-serif";
+      el.style.fontWeight = '900';
+      el.style.fontSize = '3.2rem';
+      el.style.color = '#ffe066';
+      el.style.textShadow = '0 0 16px #000, 0 0 8px #ffe066, 0 0 24px #000';
+      el.style.letterSpacing = '2px';
+      el.style.textAlign = 'center';
+      el.style.userSelect = 'none';
+      el.style.pointerEvents = 'none';
+      el.innerHTML = '🎉 Başarıyla Katıldınız! 🎉';
+      document.body.appendChild(el);
+    } else {
+      el.style.display = 'block';
+    }
+  }
+  function hideConfettiSuccess() {
+    const el = document.getElementById('confettiSuccessText');
+    if (el) el.style.display = 'none';
+  }
 </script>
 
 </body>
