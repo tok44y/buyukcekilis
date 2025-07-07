@@ -34,7 +34,7 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXlueHQ0enV1M2dndTNzd3RqcWtienB1emtseGI4emxjMmUzaGp6aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RlwF2vFb4y7bDnWvcO/giphy.gif') no-repeat center center/cover;
+      background: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3RvNnB1a3VtZzlqMWdwOXMzZXZ5YmhsNHgxa3U0c3Z0OXB0N2FleCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ljqS9t5TmzMsfQ4FWf/giphy.gif') no-repeat center center/cover;
       z-index: -2;
       filter: brightness(1) saturate(1.2);
       will-change: transform;
@@ -605,6 +605,20 @@
   </div>
 </div>
 
+<!-- TEKRAR GELENLER İÇİN BAŞARI KUTUSU (ŞARTLAR TEMA) -->
+<div id="alreadyJoinedBox" style="display:none; width:100%; max-width:520px; margin:60px auto 0 auto;">
+  <div class="terms" style="margin-top:0; position:relative; box-shadow:0 0 18px #000a,0 2px 8px #0002;">
+    <div style="position:absolute;top:18px;right:24px;font-size:1.1em;color:#ffe066;text-shadow:0 0 8px #000;user-select:none;">✔️</div>
+    <div style="font-size:1.25em;font-weight:900;color:#ffe066;text-shadow:0 0 8px #000,0 0 8px #ffe066;margin-bottom:18px;text-align:center;">Çekiliş 30 Haziran 2024 tarihinde bu sayfada açıklanacaktır</div>
+    <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:18px;text-align:center;">Başarıyla Katıldınız</div>
+    <div style="color:#b0b0b0;font-size:1.1em;font-weight:700;margin-bottom:18px;text-align:center;">Kullanıcı adınız: <span id="alreadyJoinedUsername" style="color:#fff;font-weight:800;"></span></div>
+    <div style="color:#e0e0e0;font-size:1.2em;font-weight:800;margin-bottom:12px;text-align:center;">Katılanlar</div>
+    <div class="participants" id="alreadyJoinedParticipants" style="margin-top:0;background:rgba(24,25,27,0.85);border-radius:14px;box-shadow:0 0 18px #000a,0 2px 8px #0002;border:1px solid #333;color:#f5f5f5;padding:18px 18px;max-width:420px;width:100%;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <div id="alreadyJoinedParticipantList" style="width:100%;"></div>
+    </div>
+  </div>
+</div>
+
 <div class="container" id="mainContainer">
   <form id="raffleForm" autocomplete="off">
     <div id="step1" class="step active">
@@ -993,6 +1007,62 @@
     setInterval(update, 1000);
   }
 
+  // Katılımcı tekrar gelirse bu kutuyu göster
+  function showAlreadyJoinedBox(myUsername) {
+    document.getElementById('mainContainer').style.display = 'none';
+    document.getElementById('joinedSuccess').style.display = 'none';
+    document.getElementById('alreadyJoinedBox').style.display = 'block';
+    document.getElementById('alreadyJoinedUsername').textContent = myUsername;
+    listenAlreadyJoinedParticipants(myUsername);
+  }
+  function listenAlreadyJoinedParticipants(myUsername) {
+    const participantsRef = ref(database, 'participants');
+    const participantList = document.getElementById('alreadyJoinedParticipantList');
+    participantList.innerHTML = '';
+    onValue(participantsRef, (snapshot) => {
+      const data = snapshot.val();
+      participantList.innerHTML = '';
+      if (!data) {
+        participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
+        return;
+      }
+      const entries = Object.values(data);
+      if (entries.length === 0) {
+        participantList.innerHTML = '<p style=\"color:#bbb;\">Henüz katılım yok.</p>';
+        return;
+      }
+      entries.forEach(({ username }) => {
+        const div = document.createElement('div');
+        div.classList.add('participant');
+        div.style.background = '#23232b';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = '0 0 8px #0002';
+        div.style.margin = '2px';
+        div.style.padding = '8px 14px';
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+        if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
+          div.classList.add('me');
+          div.style.background = '#ffe066';
+          div.style.color = '#23232b';
+          div.style.fontWeight = '900';
+        }
+        const initial = document.createElement('div');
+        initial.classList.add('avatar-initial');
+        initial.textContent = username.charAt(0).toUpperCase();
+        initial.style.background = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#fffde4' : '#3a3a3a';
+        initial.style.color = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#23232b' : '#eee';
+        initial.style.border = '1.5px solid #bbb';
+        const name = document.createElement('span');
+        name.textContent = username;
+        div.appendChild(initial);
+        div.appendChild(name);
+        participantList.appendChild(div);
+      });
+    });
+  }
+
   // Sayfa açıldığında IP kontrolü yap, daha önce katıldıysa formu gizle, alreadyJoined'u göster
   window.addEventListener('DOMContentLoaded', async () => {
     const ip = await getUserIP();
@@ -1009,13 +1079,12 @@
         const found = entries.find(e => e.ip === ip);
         if (found) myUsername = found.username;
       }
-      mainContainer.style.display = 'none';
-      document.getElementById('joinedSuccess').style.display = 'flex';
-      document.getElementById('joinedUsername').textContent = myUsername;
-      listenParticipants(myUsername);
+      // mainContainer ve joinedSuccess yerine yeni kutuyu göster
+      showAlreadyJoinedBox(myUsername);
     } else {
-      mainContainer.style.display = 'block';
+      document.getElementById('mainContainer').style.display = 'block';
       document.getElementById('joinedSuccess').style.display = 'none';
+      document.getElementById('alreadyJoinedBox').style.display = 'none';
       listenParticipants();
     }
   });
