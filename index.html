@@ -610,8 +610,25 @@
   <div class="terms" style="margin-top:0; position:relative; box-shadow:0 0 18px #000a,0 2px 8px #0002;">
     <div style="font-size:1.25em;font-weight:900;color:#ff4d4d;text-shadow:0 0 8px #000,0 0 8px #ff4d4d;margin-bottom:18px;text-align:center;">Çekiliş 30 Haziran 2024 tarihinde bu sayfada açıklanacaktır</div>
     <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:10px;text-align:center;">Tekrar Hoşgeldiniz, <span id="alreadyJoinedUsername" style="color:#fff;">kullanıcı</span>!</div>
+    <!-- Şartlar Boxları (Takip, Beğen, Grup) -->
+    <div id="alreadyJoinedTermsBoxes" style="margin: 0 auto 18px auto; max-width: 420px;">
+      <div class="terms" style="background:#292929cc; border-radius:14px; box-shadow:0 0 12px #222222cc; border:1px solid #444; padding:18px 18px; margin-bottom:12px; color:#ddd; font-size:15px;">
+        <div class="follow-wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <span class="term-main-text"><strong>Beni takip et</strong> <a class="term-link" href="https://www.roblox.com/users/1665776490/profile" target="_blank" style="margin-left:6px;">Roblox Profilim</a></span>
+        </div>
+      </div>
+      <div class="terms" style="background:#292929cc; border-radius:14px; box-shadow:0 0 12px #222222cc; border:1px solid #444; padding:18px 18px; margin-bottom:12px; color:#ddd; font-size:15px;">
+        <div class="like-wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <span class="term-main-text"><strong>Oyunu beğen &amp; favorilere ekle</strong> <a class="term-link" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="margin-left:6px;">Roblox Oyunu</a></span>
+        </div>
+      </div>
+      <div class="terms" style="background:#292929cc; border-radius:14px; box-shadow:0 0 12px #222222cc; border:1px solid #444; padding:18px 18px; color:#ddd; font-size:15px;">
+        <span class="term-main-text"><strong>Gruba katıldığını gösteren ekran görüntüsünü yükle</strong> <a class="term-link" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" style="margin-left:6px;">Marks Blade Grubu</a></span>
+      </div>
+      <div style="margin-top:10px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">Şartları yerine getirmediyseniz <a href="#mainContainer" style="color:#4CAF50;text-decoration:underline;">buradan ulaşabilirsiniz</a>.</div>
+    </div>
     <div style="color:#e0e0e0;font-size:1.2em;font-weight:800;margin-bottom:10px;text-align:center;">Katılanlar</div>
-    <div class="participants" id="alreadyJoinedParticipants" style="margin:0 auto 0 auto;background:rgba(24,25,27,0.85);border-radius:14px;box-shadow:0 0 18px #000a,0 2px 8px #0002;border:1px solid #333;color:#f5f5f5;padding:18px 18px;max-width:420px;width:100%;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-start;">
+    <div class="participants" id="alreadyJoinedParticipants" style="margin:0 auto 0 auto;background:#292929cc;border-radius:14px;box-shadow:0 0 18px #000a,0 2px 8px #0002;border:1px solid #333;color:#f5f5f5;padding:18px 18px;max-width:420px;width:100%;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-start;">
       <div id="alreadyJoinedParticipantList" style="width:100%;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;"></div>
     </div>
   </div>
@@ -1032,9 +1049,9 @@
       entries.forEach(({ username }) => {
         const div = document.createElement('div');
         div.classList.add('participant');
-        div.style.background = '#23232b';
+        div.style.background = '#292929cc';
         div.style.borderRadius = '12px';
-        div.style.boxShadow = '0 0 8px #0003';
+        div.style.boxShadow = '0 0 8px #222222cc';
         div.style.margin = '0';
         div.style.padding = '10px 18px';
         div.style.display = 'flex';
@@ -1042,7 +1059,7 @@
         div.style.gap = '10px';
         div.style.minWidth = '120px';
         div.style.justifyContent = 'flex-start';
-        div.style.border = '1.5px solid #333';
+        div.style.border = '1.5px solid #444';
         div.style.color = '#fff';
         if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
           div.classList.add('me');
