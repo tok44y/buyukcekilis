@@ -591,7 +591,7 @@
       transition: background 0.4s, box-shadow 0.4s, color 0.4s;
     }
 
-    /* Buton boyutunu küçültüyorum */
+    /* Buton boyutunu küçültüyorum ve hizalıyorum */
     .term-link.special-hover {
       flex: 1 1 120px;
       text-align: center;
@@ -600,6 +600,30 @@
       font-weight: 700;
       min-width: 90px;
       max-width: 180px;
+      margin: 0;
+    }
+    .terms .term-link.special-hover {
+      margin: 0 4px;
+    }
+    .terms .special-hover:last-child {
+      margin-right: 0;
+    }
+    .terms .special-hover:first-child {
+      margin-left: 0;
+    }
+    .terms .term-link.special-hover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .terms .term-link-row {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 10px auto;
+      max-width: 420px;
     }
   </style>
 </head>
@@ -649,9 +673,9 @@
     <div id="step2" class="step">
       <div class="terms">
         <p><strong>Çekilişe katılmak için aşağıdaki adımları tamamla:</strong></p>
-        <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
-          <a class="term-link special-hover" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Roblox Oyunu (Beğen & Favorile)</a>
-          <a class="term-link special-hover" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank" style="flex:1 1 180px;text-align:center;padding:12px 0;font-size:1em;font-weight:700;">Marks Blade Grubu</a>
+        <div class="term-link-row">
+          <a class="term-link special-hover" id="gameLink" href="https://www.roblox.com/games/127031268866383/UPDATE" target="_blank">Roblox Oyunu (Beğen & Favorile)</a>
+          <a class="term-link special-hover" href="https://www.roblox.com/communities/35669821/Marks-Blade#!/about" target="_blank">Marks Blade Grubu</a>
         </div>
         <div class="like-wrap" style="justify-content:center;gap:10px;margin-bottom:18px;">
           <span class="term-main-text" style="font-size:1em;">Oyunu beğenip favorilere ekledim</span>
@@ -1109,13 +1133,13 @@
       el.style.fontFamily = "'Montserrat', sans-serif";
       el.style.fontWeight = '900';
       el.style.fontSize = '3.2rem';
-      el.style.color = '#ffe066';
-      el.style.textShadow = '0 0 16px #000, 0 0 8px #ffe066, 0 0 24px #000';
+      el.style.color = '#fff';
+      el.style.textShadow = '0 0 16px #000, 0 0 8px #fff, 0 0 24px #000';
       el.style.letterSpacing = '2px';
       el.style.textAlign = 'center';
       el.style.userSelect = 'none';
       el.style.pointerEvents = 'none';
-      el.innerHTML = '🎉 Başarıyla Katıldınız! 🎉';
+      el.innerHTML = 'Başarıyla Katıldınız!';
       document.body.appendChild(el);
     } else {
       el.style.display = 'block';
