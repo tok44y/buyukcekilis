@@ -625,6 +625,29 @@
       margin: 0 auto 10px auto;
       max-width: 420px;
     }
+
+    @keyframes successFadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.7);
+        text-shadow: 0 0 0 #fff, 0 0 0 #000;
+      }
+      60% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.08);
+        text-shadow: 0 0 32px #fff, 0 0 24px #ffe066, 0 0 8px #fff;
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.98);
+        text-shadow: 0 0 24px #fff, 0 0 12px #ffe066, 0 0 4px #fff;
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 0 16px #fff, 0 0 8px #fff, 0 0 24px #000;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1139,10 +1162,13 @@
       el.style.textAlign = 'center';
       el.style.userSelect = 'none';
       el.style.pointerEvents = 'none';
+      el.style.opacity = '0';
+      el.style.animation = 'successFadeIn 1.2s cubic-bezier(.4,1.4,.6,1) forwards';
       el.innerHTML = 'Başarıyla Katıldınız!';
       document.body.appendChild(el);
     } else {
       el.style.display = 'block';
+      el.style.animation = 'successFadeIn 1.2s cubic-bezier(.4,1.4,.6,1) forwards';
     }
   }
   function hideConfettiSuccess() {
