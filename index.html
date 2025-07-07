@@ -170,13 +170,23 @@
       color: #bbb;
     }
 
-    .error {
-      color: #ff4d4d;
+    .error, .step-error, .error-message {
+      color: #ff2222 !important;
+      background: rgba(60,0,0,0.13);
       margin-top: 18px;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 1.08em;
       user-select: none;
-      text-shadow: 0 0 3px #550000aa;
+      text-shadow: 0 0 6px #ff2222cc, 0 0 2px #000a;
+      min-height: 28px;
+      text-align: center;
+      border-radius: 10px;
+      padding: 10px 0 8px 0;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 8px #ff222233;
+      display: block;
     }
+
     .info {
       margin-top: 22px;
       font-size: 16px;
@@ -381,15 +391,6 @@
       cursor: not-allowed;
       box-shadow: none;
       color: #bbb;
-    }
-    .step-error {
-      color: #ff4d4d;
-      margin-top: 18px;
-      font-weight: 700;
-      user-select: none;
-      text-shadow: 0 0 3px #550000aa;
-      min-height: 24px;
-      text-align: center;
     }
     .step-success {
       color: #4CAF50;
@@ -688,10 +689,10 @@
       />
       <button type="button" id="nextBtn" class="step-btn" style="margin-top:32px;">Devam Et</button>
       <div style="height:16px;"></div>
-      <div style="margin-top:16px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.05em; text-shadow:0 0 6px #0002;">
+      <div style="margin-top:16px;" class="error-message">
         <strong>•</strong> Kullanıcı adınızı <strong>doğru</strong> giriniz. Şartlar ve katılım bilgileriniz <strong>kontrol edilecektir!</strong>
       </div>
-      <div class="step-error" id="step1Error"></div>
+      <div class="step-error error-message" id="step1Error"></div>
     </div>
     <div id="step2" class="step">
       <div class="terms">
@@ -720,13 +721,13 @@
         </ul>
       </div>
       <button type="submit" id="submitBtn" class="step-btn" disabled>Çekilişe Katıl</button>
-      <div id="submitInfo" style="margin-top:10px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
+      <div id="submitInfo" class="error-message" style="margin-top:10px; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
         Şartlar ve katılım bilgileriniz kontrol edilecektir!
       </div>
-      <div id="submitInfo" style="margin-top:10px; color:#ff4d4d; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
+      <div id="submitInfo" class="error-message" style="margin-top:10px; font-weight:700; text-align:center; font-size:1.02em; text-shadow:0 0 6px #0002;">
         <strong>•</strong> Şartlar yerine getirilmeden buton aktif olmayacaktır.
       </div>
-      <div class="step-error" id="step2Error"></div>
+      <div class="step-error error-message" id="step2Error"></div>
       <div class="step-success" id="step2Success"></div>
     </div>
   </form>
