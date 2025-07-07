@@ -609,7 +609,7 @@
 <div id="alreadyJoinedBox" style="display:none; width:100%; max-width:520px; margin:60px auto 0 auto;">
   <div class="terms" style="margin-top:0; position:relative; box-shadow:0 0 18px #000a,0 2px 8px #0002;">
     <div style="font-size:1.25em;font-weight:900;color:#ff4d4d;text-shadow:0 0 8px #000,0 0 8px #ff4d4d;margin-bottom:18px;text-align:center;">Çekiliş 30 Haziran 2024 tarihinde bu sayfada açıklanacaktır</div>
-    <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:10px;text-align:center;">Tekrar Hoşgeldiniz, <span id="alreadyJoinedUsername" style="color:#ff4d4d;">kullanıcı</span>!</div>
+    <div style="font-size:2em;font-weight:900;color:#fff;text-shadow:0 0 8px #000;margin-bottom:10px;text-align:center;">Tekrar Hoşgeldiniz, <span id="alreadyJoinedUsername" style="color:#fff;">kullanıcı</span>!</div>
     <div style="color:#e0e0e0;font-size:1.2em;font-weight:800;margin-bottom:10px;text-align:center;">Katılanlar</div>
     <div class="participants" id="alreadyJoinedParticipants" style="margin:0 auto 0 auto;background:rgba(24,25,27,0.85);border-radius:14px;box-shadow:0 0 18px #000a,0 2px 8px #0002;border:1px solid #333;color:#f5f5f5;padding:18px 18px;max-width:420px;width:100%;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-start;">
       <div id="alreadyJoinedParticipantList" style="width:100%;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;"></div>
@@ -1021,7 +1021,7 @@
       const data = snapshot.val();
       participantList.innerHTML = '';
       if (!data) {
-        participantList.innerHTML = '<p style="color:#bbb;">Henüz katılım yok.</p>';
+        participantList.innerHTML = '<p style=\"color:#bbb;\">Henüz katılım yok.</p>';
         return;
       }
       const entries = Object.values(data);
@@ -1043,22 +1043,24 @@
         div.style.minWidth = '120px';
         div.style.justifyContent = 'flex-start';
         div.style.border = '1.5px solid #333';
+        div.style.color = '#fff';
         if (myUsername && username.toLowerCase() === myUsername.toLowerCase()) {
           div.classList.add('me');
-          div.style.background = '#ff4d4d';
-          div.style.color = '#fff';
+          div.style.background = '#e0e0e0';
+          div.style.color = '#23232b';
           div.style.fontWeight = '900';
-          div.style.border = '1.5px solid #ff4d4d';
+          div.style.border = '1.5px solid #b0b0b0';
         }
         const initial = document.createElement('div');
         initial.classList.add('avatar-initial');
         initial.textContent = username.charAt(0).toUpperCase();
-        initial.style.background = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#fff' : '#3a3a3a';
-        initial.style.color = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#ff4d4d' : '#eee';
+        initial.style.background = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#b0b0b0' : '#3a3a3a';
+        initial.style.color = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#23232b' : '#eee';
         initial.style.border = '1.5px solid #bbb';
         const name = document.createElement('span');
         name.textContent = username;
         name.style.fontWeight = '700';
+        name.style.color = myUsername && username.toLowerCase() === myUsername.toLowerCase() ? '#23232b' : '#fff';
         div.appendChild(initial);
         div.appendChild(name);
         participantList.appendChild(div);
