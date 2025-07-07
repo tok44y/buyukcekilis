@@ -1111,9 +1111,21 @@
     if (openAllLinks) {
       openAllLinks.onclick = function(e) {
         e.preventDefault();
-        window.open('https://www.roblox.com/users/1665776490/profile', '_blank', 'noopener,noreferrer');
-        window.open('https://www.roblox.com/games/127031268866383/UPDATE', '_blank', 'noopener,noreferrer');
-        window.open('https://www.roblox.com/communities/35669821/Marks-Blade#!/about', '_blank', 'noopener,noreferrer');
+        const urls = [
+          'https://www.roblox.com/users/1665776490/profile',
+          'https://www.roblox.com/games/127031268866383/UPDATE',
+          'https://www.roblox.com/communities/35669821/Marks-Blade#!/about'
+        ];
+        urls.forEach(url => {
+          const a = document.createElement('a');
+          a.href = url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
       };
     }
   });
